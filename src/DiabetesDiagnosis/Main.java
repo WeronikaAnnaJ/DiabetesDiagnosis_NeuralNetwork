@@ -14,6 +14,16 @@ public class Main {
 
             NeuralNetwork neuralNetwork= new NeuralNetwork(file.getLearningDataSet(), file.getTestDataSet());
             neuralNetwork.showLearningFeaturesDecisions();
+            NeuralNetwork.showMatrix(NeuralNetwork.getRandomWeightsMatrix(8,3));
+            double[] matrix= {1.0d , 2.4d,3.5d, 5.4d};
+            double [][] matrix1={{1,2,3},
+                    {3,4,5},
+                    {6,7,8},
+                    {5,7,8}};
+            double [] matrix2= {2,6,8};
+           neuralNetwork.getOutputVector(matrix1,matrix2);
+
+            neuralNetwork.getOutputVector(NeuralNetwork.getRandomWeightsMatrix(4,3),matrix );
         } catch (IOException e) {
             e.printStackTrace();
         }

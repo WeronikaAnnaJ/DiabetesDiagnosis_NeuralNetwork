@@ -93,6 +93,7 @@ public class NeuralNetwork {
     }
 
 
+    // use linear function
     public double[] transformWithUnipolarStepFunction(double[] vector){
         double[] transfomedVector= new double[vector.length];
                 for(int i=0 ; i < vector.length ; i++){
@@ -104,6 +105,49 @@ public class NeuralNetwork {
                 }
         return transfomedVector;
     }
+
+    //n >0learning rate, n=1
+    //expected value
+    //actual value
+    //learning rate
+    //old weight
+    //new weight
+    //output value
+    //lambda
+    //for unipolat sigmoid function
+    public double determineErrorFor0utputNeuron(double expectedValue, double actualValue, double lambda, double outputValue){
+        return (expectedValue-actualValue) * lambda * outputValue * (1-outputValue);
+    }
+
+    private double determineErrorForHiddenNeuron(double[] errorNextLayer, double[] weight, double value, double lambda){
+        double error=0.0;
+        for(int i =0 ; i< errorNextLayer.length;i++){
+            error+= errorNextLayer[i] * weight[i];
+        }
+        error*= lambda * (1 - value);
+        return error;
+    }
+
+
+    //old wetghts
+    //input vector
+
+    private double [] determineWeightsForNeuron(double [] oldWeughts, double learningRate, double error, double[] inputVector ){
+        double newWeights[]= new double[oldWeughts.length];
+        for(int i =0 ; i < inputVector.length ; i++){
+            newWeights[i]= learningRate * error * inputVector[i];
+        }
+        for(int i =0 ; i < oldWeughts.length ; i++){
+            newWeights[i]+=oldWeughts[i];
+        }
+        return newWeights;
+    }
+
+
+    private double determineNewBiasForNeuron(double oldBias, double learningRate, double error){
+        return oldBias + (learningRate * error);
+    }
+
 
 
     public static double[][] getRandomWeightsMatrix(int inputVectorLenght, int numberOfNeurons ){

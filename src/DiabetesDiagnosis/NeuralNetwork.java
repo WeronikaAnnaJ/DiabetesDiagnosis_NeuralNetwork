@@ -66,7 +66,7 @@ public class NeuralNetwork {
         }
     }
 
-    public void getOutputVector(double [][] weightMatrix, double [] inputVector){
+    public double[] getOutputVector(double [][] weightMatrix, double [] inputVector){
         //wylosować wagi początkowe dla wektorów
         //check if its possible to multiply
         double outputVector[]= new double[weightMatrix.length];
@@ -79,10 +79,30 @@ public class NeuralNetwork {
             }
             System.out.println( "outputvextoR [ "+i +"]" + outputVector[i]);
         }
+        return outputVector;
+
+    }
+
+    public double[] transformWithUnipolarSigmoidFunction(double[] vector, double lambda){
+        //Z reguły lambda(0,1]
+        double[] transfomedVector= new double[vector.length];
+        for(int i=0 ; i < vector.length ; i++){
+            transfomedVector[i]=1/( 1 + Math.exp( -lambda * vector[i] ) );
+        }
+        return transfomedVector;
+    }
 
 
-
-
+    public double[] transformWithUnipolarStepFunction(double[] vector){
+        double[] transfomedVector= new double[vector.length];
+                for(int i=0 ; i < vector.length ; i++){
+                    if(vector[i]>= 0){
+                        transfomedVector[i]=1;
+                    }else{
+                        transfomedVector[i]=0;
+                    }
+                }
+        return transfomedVector;
     }
 
 
@@ -109,5 +129,12 @@ public class NeuralNetwork {
             System.out.println();
         }
     }
+    public static void showMatrix( double[]matrix){
+        for( int i =0 ; i < matrix.length ; i++){
+                System.out.print(matrix[i]+ "  ");
+        }
+    }
+
+
 
 }

@@ -20,8 +20,15 @@ public class Main {
                     {3,4,5},
                     {6,7,8},
                     {5,7,8}};
-            double [] matrix2= {2,6,8};
-           neuralNetwork.getOutputVector(matrix1,matrix2);
+            double [] matrix2= {2,-6,8};
+            double[] outputMatrix= neuralNetwork.getOutputVector(matrix1,matrix2);
+            System.out.println("Show outpus matrix : ");
+            NeuralNetwork.showMatrix(outputMatrix);
+            double [] matrix3= {0,-6,8};
+            System.out.println("Unipolar Sigmoid Function:");
+            NeuralNetwork.showMatrix(neuralNetwork.transformWithUnipolarSigmoidFunction(matrix3,1 ));
+            System.out.println("Unipolar Step Function:");
+            NeuralNetwork.showMatrix(neuralNetwork.transformWithUnipolarStepFunction(matrix3));
 
             neuralNetwork.getOutputVector(NeuralNetwork.getRandomWeightsMatrix(4,3),matrix );
         } catch (IOException e) {

@@ -61,10 +61,7 @@ public class Main {
 
             //Backpropagation
             System.out.println("Backpropagation");
-            System.out.println("Backpropagation");
-            System.out.println("Backpropagation");
-            System.out.println("Backpropagation");
-            System.out.println("Backpropagation");
+
 
             double [][] weightsW1={
                     {1, -2},
@@ -112,8 +109,65 @@ public class Main {
             }
             NeuralNetwork.showMatrix(hiddenLayerError);
 
+            double [][] newWeightsForHiddenNeurons= new double[weightsW1.length][];
+            for(int i=0 ; i< newWeightsForHiddenNeurons.length ; i ++){
+                double [] oldWeightsForHiddenNeuron= new double[weightsW1[i].length];
+                for(int j=0; j<weightsW1[i].length; j++){
+                    oldWeightsForHiddenNeuron[j]=weightsW1[i][j];
+                }
+                System.out.println("old weights for neuron : ");
+                NeuralNetwork.showMatrix(oldWeightsForHiddenNeuron);
+
+                double[] newWeightsForHiddenNeuron= neuralNetwork.determineWeightsForNeuron(oldWeightsForHiddenNeuron,1,hiddenLayerError[i],inputX_1);
+                System.out.println("new weights for neuron : ");
+                NeuralNetwork.showMatrix(newWeightsForHiddenNeuron);
+
+                newWeightsForHiddenNeurons[i]=newWeightsForHiddenNeuron;
+            }
+            System.out.println("NEW WEIGHTS FOR NEURONS IN HIDDEN LAYER");
+            NeuralNetwork.showMatrix(newWeightsForHiddenNeurons);
 
 
+            double [] biasHiddenLayer={0,0,0};
+            double[] biasOutputLayer={0,0};
+
+            double[] newbiasHiddenLayer= new double[biasHiddenLayer.length];
+            for (int i=0 ; i < newbiasHiddenLayer.length ; i ++){
+                newbiasHiddenLayer[i]=neuralNetwork.determineNewBiasForNeuron(biasHiddenLayer[i],1,hiddenLayerError[i]);
+            }
+            NeuralNetwork.showMatrix(newbiasHiddenLayer);
+
+
+
+//tested <
+
+            System.out.println("OUTPUT LAYER");
+
+
+            double [][] newWeightsForOutputNeurons= new double[weightsM2.length][];
+            for(int i=0 ; i< newWeightsForOutputNeurons.length ; i ++){
+                double [] oldWeightsForOutputNeuron= new double[weightsM2[i].length];
+                for(int j=0; j<weightsM2[i].length; j++){
+                    oldWeightsForOutputNeuron[j]=weightsM2[i][j];
+                }
+                System.out.println("old weights for neuron : ");
+                NeuralNetwork.showMatrix(oldWeightsForOutputNeuron);
+
+                double[] newWeightsForOutputNeuron= neuralNetwork.determineWeightsForNeuron(oldWeightsForOutputNeuron,1,outpuLayerError[i],Y1_1);
+                System.out.println("new weights for neuron : ");
+                NeuralNetwork.showMatrix(newWeightsForOutputNeuron);
+
+                newWeightsForOutputNeurons[i]=newWeightsForOutputNeuron;
+            }
+            System.out.println("NEW WEIGHTS FOR NEURONS IN OUTPUT LAYER");
+            NeuralNetwork.showMatrix(newWeightsForOutputNeurons);
+
+
+            double[] newBiasOutputLayer= new double[biasOutputLayer.length];
+            for (int i=0 ; i < newBiasOutputLayer.length ; i ++){
+                newBiasOutputLayer[i]=neuralNetwork.determineNewBiasForNeuron(biasOutputLayer[i],1,outpuLayerError[i]);
+            }
+            NeuralNetwork.showMatrix(newBiasOutputLayer);
 
 
 

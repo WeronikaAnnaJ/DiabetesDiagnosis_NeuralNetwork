@@ -144,7 +144,8 @@ public class NeuralNetwork {
     }
 
 
-    private double determineNewBiasForNeuron(double oldBias, double learningRate, double error){
+
+    public double determineNewBiasForNeuron(double oldBias, double learningRate, double error){
         return oldBias + (learningRate * error);
     }
 

@@ -31,6 +31,96 @@ public class Main {
             NeuralNetwork.showMatrix(neuralNetwork.transformWithUnipolarStepFunction(matrix3));
 
             neuralNetwork.getOutputVector(NeuralNetwork.getRandomWeightsMatrix(4,3),matrix );
+
+            //output values
+            double [][] weightsW={
+                    {1,0,3},
+                    {-3,2,8},
+                    {4, -3, -2},
+                    {7,-2,-1}};
+            double [][] weightsM={
+                    {2,4,1,3},
+                    {3,-5,3,2},
+                    {4,3,-4,-3}
+            };
+            double inputX [] ={-3,4,1};
+            double [] net1= neuralNetwork.getOutputVector(weightsW, inputX);
+            NeuralNetwork.showMatrix(net1);
+
+            double [] Y1= neuralNetwork.transformWithUnipolarSigmoidFunction(net1, 1);
+            NeuralNetwork.showMatrix(Y1);
+
+            double [] net2 = neuralNetwork.getOutputVector(weightsM,Y1);
+            NeuralNetwork.showMatrix(net2);
+
+            double [] Y2 = neuralNetwork.transformWithUnipolarSigmoidFunction(net2,1);
+            NeuralNetwork.showMatrix(Y2);
+
+
+
+
+            //Backpropagation
+            System.out.println("Backpropagation");
+            System.out.println("Backpropagation");
+            System.out.println("Backpropagation");
+            System.out.println("Backpropagation");
+            System.out.println("Backpropagation");
+
+            double [][] weightsW1={
+                    {1, -2},
+                    {-3, 1},
+                    {1, -1}};
+            double [][] weightsM2={
+                    {-1,-1,-1},
+                    {1,1,1}
+            };
+            double inputX_1 [] ={-1,1};
+            double [] net1_1= neuralNetwork.getOutputVector(weightsW1, inputX_1);
+            NeuralNetwork.showMatrix(net1_1);
+
+            double [] Y1_1= neuralNetwork.transformWithUnipolarSigmoidFunction(net1_1, 1);
+            NeuralNetwork.showMatrix(Y1_1);
+
+            double [] net2_1 = neuralNetwork.getOutputVector(weightsM2,Y1_1);
+            NeuralNetwork.showMatrix(net2_1);
+
+            double [] Y2_1 = neuralNetwork.transformWithUnipolarSigmoidFunction(net2_1,1);
+            NeuralNetwork.showMatrix(Y2_1);
+
+            //error neurons from output layer
+            double [] outpuLayerError= new double[weightsM2.length];
+            double []expectedValuesOutputLayer={1, 0};
+
+            for(int i =0 ; i < outpuLayerError.length; i++){
+                outpuLayerError[i]=neuralNetwork.determineErrorFor0utputNeuron(expectedValuesOutputLayer[i],Y2_1[i], 1, Y2_1[i] );
+            }
+            NeuralNetwork.showMatrix(outpuLayerError);
+
+
+            //error neurons from hidden layer
+            double [] hiddenLayerError= new double[weightsW1.length];
+
+            for (int i =0 ; i < hiddenLayerError.length ; i ++){
+
+                double [] weightsForNextNeuron= new double[weightsM2.length];
+
+                for(int j=0 ; j< weightsM2.length; j++){
+                    weightsForNextNeuron[j]=weightsM2[j][i]; // ?? ERROR
+                    System.out.println("Error" + i +"-> weightsForNextNeuron[" + j +"] : " + weightsForNextNeuron[j]);
+                }
+                hiddenLayerError[i]=neuralNetwork.determineErrorForHiddenNeuron(outpuLayerError,weightsForNextNeuron,Y1_1[i], 1);
+            }
+            NeuralNetwork.showMatrix(hiddenLayerError);
+
+
+
+
+
+
+
+
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }

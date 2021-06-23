@@ -119,12 +119,12 @@ public class NeuralNetwork {
         return (expectedValue-actualValue) * lambda * outputValue * (1-outputValue);
     }
 
-    private double determineErrorForHiddenNeuron(double[] errorNextLayer, double[] weight, double value, double lambda){
+    public double determineErrorForHiddenNeuron(double[] errorNextLayer, double[] weight, double value, double lambda){
         double error=0.0;
         for(int i =0 ; i< errorNextLayer.length;i++){
             error+= errorNextLayer[i] * weight[i];
         }
-        error*= lambda * (1 - value);
+        error*= value * lambda * (1 - value);
         return error;
     }
 
@@ -132,7 +132,7 @@ public class NeuralNetwork {
     //old wetghts
     //input vector
 
-    private double [] determineWeightsForNeuron(double [] oldWeughts, double learningRate, double error, double[] inputVector ){
+    public double [] determineWeightsForNeuron(double [] oldWeughts, double learningRate, double error, double[] inputVector ){
         double newWeights[]= new double[oldWeughts.length];
         for(int i =0 ; i < inputVector.length ; i++){
             newWeights[i]= learningRate * error * inputVector[i];
@@ -166,6 +166,7 @@ public class NeuralNetwork {
 
 
     public static void showMatrix( double[][] matrix){
+        System.out.println();
         for( int i =0 ; i < matrix.length ; i++){
             for (int j =0 ; j< matrix[i].length ;j ++){
                 System.out.print(matrix[i][j] +"  ");
@@ -174,6 +175,7 @@ public class NeuralNetwork {
         }
     }
     public static void showMatrix( double[]matrix){
+        System.out.println();
         for( int i =0 ; i < matrix.length ; i++){
                 System.out.print(matrix[i]+ "  ");
         }

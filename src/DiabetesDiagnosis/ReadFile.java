@@ -17,6 +17,8 @@ public class ReadFile {
     private  String[] label;
 
 
+    //bias
+
 
     public  void readCsv() throws IOException {
 

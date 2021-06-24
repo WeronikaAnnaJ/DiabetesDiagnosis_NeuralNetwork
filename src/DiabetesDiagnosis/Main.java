@@ -12,7 +12,8 @@ public class Main {
             file.showAllData();
             file.segregateData();
 
-            NeuralNetwork neuralNetwork= new NeuralNetwork(file.getLearningDataSet(), file.getTestDataSet());
+
+            NeuralNetwork neuralNetwork= new NeuralNetwork(file.getLearningDataSet(), file.getTestDataSet(),1,null,null);
             neuralNetwork.showLearningFeaturesDecisions();
             NeuralNetwork.showMatrix(NeuralNetwork.getRandomWeightsMatrix(8,3));
             double[] matrix= {1.0d , 2.4d,3.5d, 5.4d};
@@ -84,6 +85,7 @@ public class Main {
             double [] Y2_1 = neuralNetwork.transformWithUnipolarSigmoidFunction(net2_1,1);
             NeuralNetwork.showMatrix(Y2_1);
 
+
             //error neurons from output layer
             double [] outpuLayerError= new double[weightsM2.length];
             double []expectedValuesOutputLayer={1, 0};
@@ -92,6 +94,7 @@ public class Main {
                 outpuLayerError[i]=neuralNetwork.determineErrorFor0utputNeuron(expectedValuesOutputLayer[i],Y2_1[i], 1, Y2_1[i] );
             }
             NeuralNetwork.showMatrix(outpuLayerError);
+
 
 
             //error neurons from hidden layer
@@ -108,6 +111,10 @@ public class Main {
                 hiddenLayerError[i]=neuralNetwork.determineErrorForHiddenNeuron(outpuLayerError,weightsForNextNeuron,Y1_1[i], 1);
             }
             NeuralNetwork.showMatrix(hiddenLayerError);
+
+
+
+            //new weights
 
             double [][] newWeightsForHiddenNeurons= new double[weightsW1.length][];
             for(int i=0 ; i< newWeightsForHiddenNeurons.length ; i ++){
@@ -131,6 +138,7 @@ public class Main {
             double [] biasHiddenLayer={0,0,0};
             double[] biasOutputLayer={0,0};
 
+            System.out.println("NEW BIAS FOR NEURONS IN HIDDEN LAYER");
             double[] newbiasHiddenLayer= new double[biasHiddenLayer.length];
             for (int i=0 ; i < newbiasHiddenLayer.length ; i ++){
                 newbiasHiddenLayer[i]=neuralNetwork.determineNewBiasForNeuron(biasHiddenLayer[i],1,hiddenLayerError[i]);
@@ -171,9 +179,53 @@ public class Main {
 
 
 
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println("NEURAL NETWORK 1");
 
+            //testing Method calculateOutputForNetwork and constructor parapeters and class atributes
+            NeuralNetwork neuralNetwork1= new NeuralNetwork(file.getLearningDataSet(), file.getTestDataSet(), 1, biasHiddenLayer,biasOutputLayer);
+            neuralNetwork1.calculateOutputForNetwork(weightsW1, weightsM2,inputX_1,1);
+            System.out.println("\n------- > neural network net1 :");
+            NeuralNetwork.showMatrix(neuralNetwork1.getNet1());
+            System.out.println("\n------- > neural network Y1 :");
+            NeuralNetwork.showMatrix(neuralNetwork1.getY1());
+            System.out.println("\n------- > neural network net2 :");
+            NeuralNetwork.showMatrix(neuralNetwork1.getNet2());
+            System.out.println("\n------- > neural network Y2 :");
+            NeuralNetwork.showMatrix(neuralNetwork1.getY2());
 
+            //errore
+            neuralNetwork1.calculateErrorsForLayers(weightsW1,weightsM2, expectedValuesOutputLayer);
+            System.out.println("\n------- > error for hidden layer:");
+            NeuralNetwork.showMatrix(neuralNetwork1.getHiddenLayerError());
+            System.out.println("\n------- > error for output layer :");
+            NeuralNetwork.showMatrix(neuralNetwork1.getOutpuLayerError());
 
+            //new weights for hidden layer
+
+            neuralNetwork1.calculateWeightsForHiddenLayer(weightsW1,1,inputX_1);
+            System.out.println("\n------- > new weights for hidden layer :");
+            NeuralNetwork.showMatrix(neuralNetwork1.getWeightsForHiddenLayer());
+
+            //new bias for hidden layer
+            neuralNetwork1.calculateNewBiasForHiddenLayer(biasHiddenLayer,1, hiddenLayerError);
+            System.out.println("\n------- > new bias for hidden layer :");
+            NeuralNetwork.showMatrix(neuralNetwork1.getBiasHiddenLayer());
+
+            //new weights for hidden layer
+            neuralNetwork1.calculateWeightsForOutputLayer(weightsM2,1,Y1_1);
+            System.out.println("\n------- > new weights for output layer :");
+            NeuralNetwork.showMatrix(neuralNetwork1.getWeightsForOutputLayer());
+
+            //new bias for output layer
+            neuralNetwork1.calculateNewBiasForOutputLayer(biasOutputLayer,1, outpuLayerError);
+            System.out.println("\n------- > new bias for hidden layer :");
+            NeuralNetwork.showMatrix(neuralNetwork1.getBiasOutputLayer());
 
         } catch (IOException e) {
             e.printStackTrace();

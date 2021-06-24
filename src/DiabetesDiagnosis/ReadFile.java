@@ -13,7 +13,7 @@ public class ReadFile {
     private static File file = new File("src/DiabetesDiagnosis/DataFile/diabetes.csv");
 
     private  List<String[]> learningDataSet= new ArrayList<>();
-    private  List<String[]> testDataSet= new ArrayList<>();
+    private  List<String[]> testingDataSet= new ArrayList<>();
     private  String[] label;
 
 
@@ -65,9 +65,9 @@ public class ReadFile {
         System.out.println(" testing rows number-> " + testRows);
 
         for( int i = learningRows +1 ; i <= rowsNumber ; i ++){
-            testDataSet.add(allData.get(i));
+            testingDataSet.add(allData.get(i));
         }
-        System.out.println(" size -> " + testDataSet.size());
+        System.out.println(" size -> " + testingDataSet.size());
     }
 
 
@@ -85,7 +85,7 @@ public class ReadFile {
         return learningDataSet;
     }
 
-    public List<String[]> getTestDataSet() {
-        return testDataSet;
+    public List<String[]> getTestingDataSet() {
+        return testingDataSet;
     }
 }

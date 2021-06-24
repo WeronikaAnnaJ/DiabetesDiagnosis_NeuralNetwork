@@ -1,19 +1,499 @@
 package DiabetesDiagnosis;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+        // write your code here
         try {
-           ReadFile file =  new ReadFile();
+            ReadFile file = new ReadFile();
             file.readCsv();
             file.showAllData();
             file.segregateData();
 
+            Data data = new Data(file.getLearningDataSet(), file.getTestingDataSet());
+            data.showLearningSets();
 
-            NeuralNetwork neuralNetwork= new NeuralNetwork(file.getLearningDataSet(), file.getTestDataSet(),1,null,null);
+            NeuralNetwork neuralNetwork = new NeuralNetwork(data.getLearningDataSetFeatures(), data.getLearningDataSetDecisions());
+            double[] biasHiddenLayer = {0, 0, 0, 0, 0, 0, 0, 0};
+            double[] biasOutputLayer = {0};
+            neuralNetwork.setBiasHiddenLayer(biasHiddenLayer);
+            neuralNetwork.setBiasOutputLayer(biasOutputLayer);
+            neuralNetwork.setLambda(1);
+            neuralNetwork.setLearningRate(0.01);
+            neuralNetwork.setWeightsHiddenLayer(NeuralNetwork.getRandomWeightsMatrix(8, 8));
+            neuralNetwork.setWeightsOutputLayer(NeuralNetwork.getRandomWeightsMatrix(8, 1));
+
+            for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
+
+                double[] inputVector = neuralNetwork.getLearningDataSetFeatures().get(i);
+                double[] expectedValuesOutputLayer = new double[1];
+                expectedValuesOutputLayer[0] = neuralNetwork.getLearningDataSetDecisions().get(i);// what if is onlu one neuron in output vector ? make methods for double instead double []?
+
+
+                neuralNetwork.carryOutEpoch(inputVector, expectedValuesOutputLayer, biasHiddenLayer, biasOutputLayer);
+
+
+                System.out.println("\n------- > neural network net1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet1());
+                System.out.println("\n------- > neural network Y1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY1());
+                System.out.println("\n------- > neural network net2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet2());
+                System.out.println("\n------- > neural network Y2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY2());
+
+                //errore
+                neuralNetwork.calculateErrorsForLayers(neuralNetwork.getWeightsForHiddenLayer(), neuralNetwork.getWeightsForOutputLayer(), expectedValuesOutputLayer);
+                System.out.println("\n------- > error for hidden layer:");
+                NeuralNetwork.showMatrix(neuralNetwork.getHiddenLayerError());
+                System.out.println("\n------- > error for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getOutpuLayerError());
+
+                System.out.println("\n------- > new weights for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForHiddenLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasHiddenLayer());
+
+                System.out.println("\n------- > new weights for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForOutputLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasOutputLayer());
+
+
+                System.out.println("\n------- > error before :" + neuralNetwork.getMeanSquaredErrorBeforeEpoch());
+                System.out.println("\n------- > error after :" + neuralNetwork.getMeanSquaredErrorAfterEpoch());
+
+            }
+            for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
+
+                double[] inputVector = neuralNetwork.getLearningDataSetFeatures().get(i);
+                double[] expectedValuesOutputLayer = new double[1];
+                expectedValuesOutputLayer[0] = neuralNetwork.getLearningDataSetDecisions().get(i);// what if is onlu one neuron in output vector ? make methods for double instead double []?
+
+
+                neuralNetwork.carryOutEpoch(inputVector, expectedValuesOutputLayer, biasHiddenLayer, biasOutputLayer);
+
+
+                System.out.println("\n------- > neural network net1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet1());
+                System.out.println("\n------- > neural network Y1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY1());
+                System.out.println("\n------- > neural network net2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet2());
+                System.out.println("\n------- > neural network Y2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY2());
+
+                //errore
+                neuralNetwork.calculateErrorsForLayers(neuralNetwork.getWeightsForHiddenLayer(), neuralNetwork.getWeightsForOutputLayer(), expectedValuesOutputLayer);
+                System.out.println("\n------- > error for hidden layer:");
+                NeuralNetwork.showMatrix(neuralNetwork.getHiddenLayerError());
+                System.out.println("\n------- > error for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getOutpuLayerError());
+
+                System.out.println("\n------- > new weights for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForHiddenLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasHiddenLayer());
+
+                System.out.println("\n------- > new weights for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForOutputLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasOutputLayer());
+
+
+                System.out.println("\n------- > error before :" + neuralNetwork.getMeanSquaredErrorBeforeEpoch());
+                System.out.println("\n------- > error after :" + neuralNetwork.getMeanSquaredErrorAfterEpoch());
+
+            }
+
+
+            for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
+
+                double[] inputVector = neuralNetwork.getLearningDataSetFeatures().get(i);
+                double[] expectedValuesOutputLayer = new double[1];
+                expectedValuesOutputLayer[0] = neuralNetwork.getLearningDataSetDecisions().get(i);// what if is onlu one neuron in output vector ? make methods for double instead double []?
+
+
+                neuralNetwork.carryOutEpoch(inputVector, expectedValuesOutputLayer, biasHiddenLayer, biasOutputLayer);
+
+
+                System.out.println("\n------- > neural network net1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet1());
+                System.out.println("\n------- > neural network Y1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY1());
+                System.out.println("\n------- > neural network net2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet2());
+                System.out.println("\n------- > neural network Y2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY2());
+
+                //errore
+                neuralNetwork.calculateErrorsForLayers(neuralNetwork.getWeightsForHiddenLayer(), neuralNetwork.getWeightsForOutputLayer(), expectedValuesOutputLayer);
+                System.out.println("\n------- > error for hidden layer:");
+                NeuralNetwork.showMatrix(neuralNetwork.getHiddenLayerError());
+                System.out.println("\n------- > error for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getOutpuLayerError());
+
+                System.out.println("\n------- > new weights for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForHiddenLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasHiddenLayer());
+
+                System.out.println("\n------- > new weights for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForOutputLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasOutputLayer());
+
+
+                System.out.println("\n------- > error before :" + neuralNetwork.getMeanSquaredErrorBeforeEpoch());
+                System.out.println("\n------- > error after :" + neuralNetwork.getMeanSquaredErrorAfterEpoch());
+
+            }
+
+            for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
+
+                double[] inputVector = neuralNetwork.getLearningDataSetFeatures().get(i);
+                double[] expectedValuesOutputLayer = new double[1];
+                expectedValuesOutputLayer[0] = neuralNetwork.getLearningDataSetDecisions().get(i);// what if is onlu one neuron in output vector ? make methods for double instead double []?
+
+
+                neuralNetwork.carryOutEpoch(inputVector, expectedValuesOutputLayer, biasHiddenLayer, biasOutputLayer);
+
+
+                System.out.println("\n------- > neural network net1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet1());
+                System.out.println("\n------- > neural network Y1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY1());
+                System.out.println("\n------- > neural network net2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet2());
+                System.out.println("\n------- > neural network Y2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY2());
+
+                //errore
+                neuralNetwork.calculateErrorsForLayers(neuralNetwork.getWeightsForHiddenLayer(), neuralNetwork.getWeightsForOutputLayer(), expectedValuesOutputLayer);
+                System.out.println("\n------- > error for hidden layer:");
+                NeuralNetwork.showMatrix(neuralNetwork.getHiddenLayerError());
+                System.out.println("\n------- > error for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getOutpuLayerError());
+
+                System.out.println("\n------- > new weights for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForHiddenLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasHiddenLayer());
+
+                System.out.println("\n------- > new weights for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForOutputLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasOutputLayer());
+
+
+                System.out.println("\n------- > error before :" + neuralNetwork.getMeanSquaredErrorBeforeEpoch());
+                System.out.println("\n------- > error after :" + neuralNetwork.getMeanSquaredErrorAfterEpoch());
+
+            }
+
+            for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
+
+                double[] inputVector = neuralNetwork.getLearningDataSetFeatures().get(i);
+                double[] expectedValuesOutputLayer = new double[1];
+                expectedValuesOutputLayer[0] = neuralNetwork.getLearningDataSetDecisions().get(i);// what if is onlu one neuron in output vector ? make methods for double instead double []?
+
+
+                neuralNetwork.carryOutEpoch(inputVector, expectedValuesOutputLayer, biasHiddenLayer, biasOutputLayer);
+
+
+                System.out.println("\n------- > neural network net1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet1());
+                System.out.println("\n------- > neural network Y1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY1());
+                System.out.println("\n------- > neural network net2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet2());
+                System.out.println("\n------- > neural network Y2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY2());
+
+                //errore
+                neuralNetwork.calculateErrorsForLayers(neuralNetwork.getWeightsForHiddenLayer(), neuralNetwork.getWeightsForOutputLayer(), expectedValuesOutputLayer);
+                System.out.println("\n------- > error for hidden layer:");
+                NeuralNetwork.showMatrix(neuralNetwork.getHiddenLayerError());
+                System.out.println("\n------- > error for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getOutpuLayerError());
+
+                System.out.println("\n------- > new weights for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForHiddenLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasHiddenLayer());
+
+                System.out.println("\n------- > new weights for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForOutputLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasOutputLayer());
+
+
+                System.out.println("\n------- > error before :" + neuralNetwork.getMeanSquaredErrorBeforeEpoch());
+                System.out.println("\n------- > error after :" + neuralNetwork.getMeanSquaredErrorAfterEpoch());
+
+            }
+
+            for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
+
+                double[] inputVector = neuralNetwork.getLearningDataSetFeatures().get(i);
+                double[] expectedValuesOutputLayer = new double[1];
+                expectedValuesOutputLayer[0] = neuralNetwork.getLearningDataSetDecisions().get(i);// what if is onlu one neuron in output vector ? make methods for double instead double []?
+
+
+                neuralNetwork.carryOutEpoch(inputVector, expectedValuesOutputLayer, biasHiddenLayer, biasOutputLayer);
+
+
+                System.out.println("\n------- > neural network net1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet1());
+                System.out.println("\n------- > neural network Y1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY1());
+                System.out.println("\n------- > neural network net2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet2());
+                System.out.println("\n------- > neural network Y2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY2());
+
+                //errore
+                neuralNetwork.calculateErrorsForLayers(neuralNetwork.getWeightsForHiddenLayer(), neuralNetwork.getWeightsForOutputLayer(), expectedValuesOutputLayer);
+                System.out.println("\n------- > error for hidden layer:");
+                NeuralNetwork.showMatrix(neuralNetwork.getHiddenLayerError());
+                System.out.println("\n------- > error for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getOutpuLayerError());
+
+                System.out.println("\n------- > new weights for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForHiddenLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasHiddenLayer());
+
+                System.out.println("\n------- > new weights for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForOutputLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasOutputLayer());
+
+
+                System.out.println("\n------- > error before :" + neuralNetwork.getMeanSquaredErrorBeforeEpoch());
+                System.out.println("\n------- > error after :" + neuralNetwork.getMeanSquaredErrorAfterEpoch());
+
+            }
+
+            for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
+
+                double[] inputVector = neuralNetwork.getLearningDataSetFeatures().get(i);
+                double[] expectedValuesOutputLayer = new double[1];
+                expectedValuesOutputLayer[0] = neuralNetwork.getLearningDataSetDecisions().get(i);// what if is onlu one neuron in output vector ? make methods for double instead double []?
+
+
+                neuralNetwork.carryOutEpoch(inputVector, expectedValuesOutputLayer, biasHiddenLayer, biasOutputLayer);
+
+
+                System.out.println("\n------- > neural network net1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet1());
+                System.out.println("\n------- > neural network Y1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY1());
+                System.out.println("\n------- > neural network net2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet2());
+                System.out.println("\n------- > neural network Y2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY2());
+
+                //errore
+                neuralNetwork.calculateErrorsForLayers(neuralNetwork.getWeightsForHiddenLayer(), neuralNetwork.getWeightsForOutputLayer(), expectedValuesOutputLayer);
+                System.out.println("\n------- > error for hidden layer:");
+                NeuralNetwork.showMatrix(neuralNetwork.getHiddenLayerError());
+                System.out.println("\n------- > error for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getOutpuLayerError());
+
+                System.out.println("\n------- > new weights for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForHiddenLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasHiddenLayer());
+
+                System.out.println("\n------- > new weights for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForOutputLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasOutputLayer());
+
+
+                System.out.println("\n------- > error before :" + neuralNetwork.getMeanSquaredErrorBeforeEpoch());
+                System.out.println("\n------- > error after :" + neuralNetwork.getMeanSquaredErrorAfterEpoch());
+
+            }
+
+            for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
+
+                double[] inputVector = neuralNetwork.getLearningDataSetFeatures().get(i);
+                double[] expectedValuesOutputLayer = new double[1];
+                expectedValuesOutputLayer[0] = neuralNetwork.getLearningDataSetDecisions().get(i);// what if is onlu one neuron in output vector ? make methods for double instead double []?
+
+
+                neuralNetwork.carryOutEpoch(inputVector, expectedValuesOutputLayer, biasHiddenLayer, biasOutputLayer);
+
+
+                System.out.println("\n------- > neural network net1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet1());
+                System.out.println("\n------- > neural network Y1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY1());
+                System.out.println("\n------- > neural network net2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet2());
+                System.out.println("\n------- > neural network Y2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY2());
+
+                //errore
+                neuralNetwork.calculateErrorsForLayers(neuralNetwork.getWeightsForHiddenLayer(), neuralNetwork.getWeightsForOutputLayer(), expectedValuesOutputLayer);
+                System.out.println("\n------- > error for hidden layer:");
+                NeuralNetwork.showMatrix(neuralNetwork.getHiddenLayerError());
+                System.out.println("\n------- > error for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getOutpuLayerError());
+
+                System.out.println("\n------- > new weights for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForHiddenLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasHiddenLayer());
+
+                System.out.println("\n------- > new weights for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForOutputLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasOutputLayer());
+
+
+                System.out.println("\n------- > error before :" + neuralNetwork.getMeanSquaredErrorBeforeEpoch());
+                System.out.println("\n------- > error after :" + neuralNetwork.getMeanSquaredErrorAfterEpoch());
+
+            }
+
+            for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
+
+                double[] inputVector = neuralNetwork.getLearningDataSetFeatures().get(i);
+                double[] expectedValuesOutputLayer = new double[1];
+                expectedValuesOutputLayer[0] = neuralNetwork.getLearningDataSetDecisions().get(i);// what if is onlu one neuron in output vector ? make methods for double instead double []?
+
+
+                neuralNetwork.carryOutEpoch(inputVector, expectedValuesOutputLayer, biasHiddenLayer, biasOutputLayer);
+
+
+                System.out.println("\n------- > neural network net1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet1());
+                System.out.println("\n------- > neural network Y1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY1());
+                System.out.println("\n------- > neural network net2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet2());
+                System.out.println("\n------- > neural network Y2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY2());
+
+                //errore
+                neuralNetwork.calculateErrorsForLayers(neuralNetwork.getWeightsForHiddenLayer(), neuralNetwork.getWeightsForOutputLayer(), expectedValuesOutputLayer);
+                System.out.println("\n------- > error for hidden layer:");
+                NeuralNetwork.showMatrix(neuralNetwork.getHiddenLayerError());
+                System.out.println("\n------- > error for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getOutpuLayerError());
+
+                System.out.println("\n------- > new weights for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForHiddenLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasHiddenLayer());
+
+                System.out.println("\n------- > new weights for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForOutputLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasOutputLayer());
+
+
+                System.out.println("\n------- > error before :" + neuralNetwork.getMeanSquaredErrorBeforeEpoch());
+                System.out.println("\n------- > error after :" + neuralNetwork.getMeanSquaredErrorAfterEpoch());
+
+            }
+
+            for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
+
+                double[] inputVector = neuralNetwork.getLearningDataSetFeatures().get(i);
+                double[] expectedValuesOutputLayer = new double[1];
+                expectedValuesOutputLayer[0] = neuralNetwork.getLearningDataSetDecisions().get(i);// what if is onlu one neuron in output vector ? make methods for double instead double []?
+
+
+                neuralNetwork.carryOutEpoch(inputVector, expectedValuesOutputLayer, biasHiddenLayer, biasOutputLayer);
+
+
+                System.out.println("\n------- > neural network net1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet1());
+                System.out.println("\n------- > neural network Y1 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY1());
+                System.out.println("\n------- > neural network net2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getNet2());
+                System.out.println("\n------- > neural network Y2 :");
+                NeuralNetwork.showMatrix(neuralNetwork.getY2());
+
+                //errore
+                neuralNetwork.calculateErrorsForLayers(neuralNetwork.getWeightsForHiddenLayer(), neuralNetwork.getWeightsForOutputLayer(), expectedValuesOutputLayer);
+                System.out.println("\n------- > error for hidden layer:");
+                NeuralNetwork.showMatrix(neuralNetwork.getHiddenLayerError());
+                System.out.println("\n------- > error for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getOutpuLayerError());
+
+                System.out.println("\n------- > new weights for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForHiddenLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasHiddenLayer());
+
+                System.out.println("\n------- > new weights for output layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getWeightsForOutputLayer());
+
+                System.out.println("\n------- > new bias for hidden layer :");
+                NeuralNetwork.showMatrix(neuralNetwork.getBiasOutputLayer());
+
+
+                System.out.println("\n------- > error before :" + neuralNetwork.getMeanSquaredErrorBeforeEpoch());
+                System.out.println("\n------- > error after :" + neuralNetwork.getMeanSquaredErrorAfterEpoch());
+
+            }
+
+
+            System.out.println(" ooooooooooooooooooooooo" + neuralNetwork.getLearningDatataSetResults().size());
+
+
+            int j=0;
+            for (int i = 0; i < neuralNetwork.getLearningDatataSetResults().size(); i++) {
+                if( i %(neuralNetwork.getLearningDataSetDecisions().size()-1)==0){ //multiplicity
+                    j=0;
+                }
+                System.out.println(i + ". " + "error: " + neuralNetwork.getErrorsBefore().get(i) + ",  value: " + neuralNetwork.getLearningDatataSetResults().get(i)[0] + " , expected value: " + neuralNetwork.getLearningDataSetDecisions().get(j));
+                j++;
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /*         NeuralNetwork neuralNetwork= new NeuralNetwork(file.getLearningDataSet(), file.getTestDataSet(),1,null,null);
             neuralNetwork.showLearningFeaturesDecisions();
             NeuralNetwork.showMatrix(NeuralNetwork.getRandomWeightsMatrix(8,3));
             double[] matrix= {1.0d , 2.4d,3.5d, 5.4d};
@@ -271,8 +751,7 @@ public class Main {
 
             //get input Vectot ( 8 features)
             double [] inputVector= neuralNetwork3.getLearningDataSetFeatures().get(0);
-            double []expectedValue= new double[1];
-            expectedValue[0]= neuralNetwork3.getLearningDataSetDecisions().get(0);// what if is onlu one neuron in output vector ? make methods for double instead double []?
+            double []expectedValue=  neuralNetwork3.getLearningDataSetDecisions().get(0);// what if is onlu one neuron in output vector ? make methods for double instead double []?
             NeuralNetwork.showMatrix(inputVector);
             System.out.println(expectedValue[0]);
             double[][] weightsHidden= NeuralNetwork.getRandomWeightsMatrix(8,8);
@@ -317,7 +796,42 @@ public class Main {
 
 
 
+         List<double[]> emptyList= new ArrayList<>();
+         neuralNetwork1.setLearningDataSetResults(emptyList);
 
+
+         List<double[]> data= neuralNetwork1.getLearningDataSetFeatures();
+        for(int i =0 ; i< data.size(); i++){
+         double [] input=data.get(i);
+         double [] expected= neuralNetwork1.getLearningDataSetDecisions().get(i);// what if is onlu one neuron in output vector ? make methods for double instead double []?
+         NeuralNetwork.showMatrix(inputVector);
+         System.out.println(expectedValue[0]);
+         double[][] weightsHidden_1= NeuralNetwork.getRandomWeightsMatrix(8,8);
+         double[][] weightsOutput_1= NeuralNetwork.getRandomWeightsMatrix(8,1);
+         NeuralNetwork.showMatrix(weightsHidden);
+         NeuralNetwork.showMatrix(weightsOutput);
+         neuralNetwork3.carryOutEpoch(weightsHidden_1,weightsOutput_1,input,1,expected,0.01, biasHiddenLayer3,biasOutputLayer3);
+        }
+
+        //decide if expected value, and real values should be stored in double [] or double
+
+
+
+
+
+
+         List<double[]> allValues=neuralNetwork1.getLearningDataSetResults();
+         List<double[]> allExpectedValues=  neuralNetwork1.getLearningDataSetDecisions();
+
+        for(int i = 0; i < allValues.size(); i++){
+         System.out.print("\n    "+ i +".  ");
+         //for one neuron
+          System.out.print(" expected: "+ allValues.get(i)[0]+ " expected: "+ allExpectedValues.get(i)[0] );
+
+        }
+
+
+*/
 
 
 

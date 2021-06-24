@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static java.lang.Math.pow;
 
 
 enum ActivationFunctions {
@@ -49,6 +50,10 @@ public class NeuralNetwork {
     double [][] newWeightsForHiddenNeurons;
     double [][] newWeightsForOutputNeurons;
     double learningRate;
+
+    double meanSquaredErrorBeforeEpoch;
+    double meanSquaredErrorAfterEpoch;
+
 
     NeuralNetwork(List<String[]> learningDataSet, List<String[]>testDataSet, double lambda,double[] biasOutputLayer,double[] biasHiddenLayer){
 
@@ -290,6 +295,8 @@ public class NeuralNetwork {
         NeuralNetwork.showMatrix(newWeightsForOutputNeurons);
     }
 
+
+
     public void calculateNewBiasForOutputLayer(double[] biasOutputLayer,double learningRate,double [] outpuLayerError){
         double[] newBiasOutputLayer= new double[biasOutputLayer.length];
         for (int i=0 ; i < newBiasOutputLayer.length ; i ++){
@@ -300,17 +307,35 @@ public class NeuralNetwork {
 
 
 
+    //epoch
+    //2 layers, sigmoid
+    public void carryOutEpoch(double[][] weightsHiddenLayer, double[][] weightsOutputLayer, double [] input, double lambda,double [] expectedValuesOutputLayer, double learningRate,
+                              double[] biasHiddenLayer, double[] biasOutputLayer){
+        calculateOutputForNetwork(weightsHiddenLayer,weightsOutputLayer,input,lambda);
+        this.meanSquaredErrorBeforeEpoch=calculateMeanSquaredError(expectedValuesOutputLayer,Y2);
+        calculateErrorsForLayers(weightsHiddenLayer,weightsOutputLayer, expectedValuesOutputLayer);
+        calculateWeightsForHiddenLayer(weightsHiddenLayer,learningRate,input);
+        calculateNewBiasForHiddenLayer(biasHiddenLayer,learningRate, hiddenLayerError);//decide where put values matrix, atripute ?
+        calculateWeightsForOutputLayer(weightsOutputLayer,learningRate,Y1);
+        calculateNewBiasForOutputLayer(biasOutputLayer,learningRate, outpuLayerError);
 
-
-
-    public void calculateWeightsAndBiasForLayers(){
-
-
-
+        calculateOutputForNetwork(this.newWeightsForHiddenNeurons,this.newWeightsForOutputNeurons,input,lambda);
+        this.meanSquaredErrorAfterEpoch=calculateMeanSquaredError(expectedValuesOutputLayer,Y2);
     }
 
-    //epoch
 
+
+    public double calculateMeanSquaredError(double [] expectedValues,  double [] actualValues ){
+        double error=0.0;
+        for(int i=0;i<expectedValues.length;i++){
+            System.out.println(">>>>>>>>>>>>>>   expectedValues "+expectedValues[i] +"   >>>>>>>>>>  actualValue" + actualValues[i] );
+            error+=pow((expectedValues[i]-actualValues[i]),2);
+            System.out.println("error " + i + " " + error );
+        }
+        error= error/2;
+        System.out.println(">>>>>>>>>>> ERROR " + error);
+        return error;
+    }
 
 
 
@@ -353,5 +378,23 @@ public class NeuralNetwork {
 
     public double[] getBiasOutputLayer() {
         return biasOutputLayer;
+    }
+
+
+
+    public List<double[]> getLearningDataSetFeatures() {
+        return learningDataSetFeatures;
+    }
+
+    public List<Double> getLearningDataSetDecisions() {
+        return learningDataSetDecisions;
+    }
+
+    public double getMeanSquaredErrorAfterEpoch() {
+        return meanSquaredErrorAfterEpoch;
+    }
+
+    public double getMeanSquaredErrorBeforeEpoch() {
+        return meanSquaredErrorBeforeEpoch;
     }
 }

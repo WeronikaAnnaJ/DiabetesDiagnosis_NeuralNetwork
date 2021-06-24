@@ -227,6 +227,100 @@ public class Main {
             System.out.println("\n------- > new bias for hidden layer :");
             NeuralNetwork.showMatrix(neuralNetwork1.getBiasOutputLayer());
 
+
+            //group methods to backpropagation
+            //decita about static or void methods, parameters in methods
+            //write epoch with 1 method
+            //how to calculate how backpropagation affect
+            //how error is lower?
+
+            System.out.println("NEURAL NETWORK 2");
+
+            NeuralNetwork neuralNetwork2= new NeuralNetwork(file.getLearningDataSet(), file.getTestDataSet(), 1, biasHiddenLayer,biasOutputLayer);
+            neuralNetwork1.carryOutEpoch(weightsW1,weightsM2, inputX_1,1, expectedValuesOutputLayer, 1, biasHiddenLayer, biasOutputLayer);
+
+
+            System.out.println("\n------- > new weights for hidden layer :");
+            NeuralNetwork.showMatrix(neuralNetwork1.getWeightsForHiddenLayer());
+
+            System.out.println("\n------- > new bias for hidden layer :");
+            NeuralNetwork.showMatrix(neuralNetwork1.getBiasHiddenLayer());
+
+            System.out.println("\n------- > new weights for output layer :");
+            NeuralNetwork.showMatrix(neuralNetwork1.getWeightsForOutputLayer());
+
+            System.out.println("\n------- > new bias for hidden layer :");
+            NeuralNetwork.showMatrix(neuralNetwork1.getBiasOutputLayer());
+
+
+            //check method and neuram network for 1 row from file
+            //error pefore and after
+
+
+            System.out.println("\n\nNEURAL NETWORK 3");
+
+            //metoda losujaca ?
+            double [] biasHiddenLayer3={0,0,0,0,0,0,0,0};
+            double [] biasOutputLayer3={0};
+            NeuralNetwork neuralNetwork3= new NeuralNetwork(file.getLearningDataSet(), file.getTestDataSet(), 1, biasHiddenLayer3,biasOutputLayer3);
+            //2 layers ( without input layer)
+            //hidden layer 8 neurons
+            //output layer 1 neuron
+            //sigmoid function
+
+
+            //get input Vectot ( 8 features)
+            double [] inputVector= neuralNetwork3.getLearningDataSetFeatures().get(0);
+            double []expectedValue= new double[1];
+            expectedValue[0]= neuralNetwork3.getLearningDataSetDecisions().get(0);// what if is onlu one neuron in output vector ? make methods for double instead double []?
+            NeuralNetwork.showMatrix(inputVector);
+            System.out.println(expectedValue[0]);
+            double[][] weightsHidden= NeuralNetwork.getRandomWeightsMatrix(8,8);
+            double[][] weightsOutput= NeuralNetwork.getRandomWeightsMatrix(8,1);
+            NeuralNetwork.showMatrix(weightsHidden);
+            NeuralNetwork.showMatrix(weightsOutput);
+            neuralNetwork3.carryOutEpoch(weightsHidden,weightsOutput,inputVector,1,expectedValue,0.01, biasHiddenLayer3,biasOutputLayer3);
+
+
+            System.out.println("\n------- > neural network net1 :");
+            NeuralNetwork.showMatrix(neuralNetwork3.getNet1());
+            System.out.println("\n------- > neural network Y1 :");
+            NeuralNetwork.showMatrix(neuralNetwork3.getY1());
+            System.out.println("\n------- > neural network net2 :");
+            NeuralNetwork.showMatrix(neuralNetwork3.getNet2());
+            System.out.println("\n------- > neural network Y2 :");
+            NeuralNetwork.showMatrix(neuralNetwork3.getY2());
+
+            //errore
+            neuralNetwork1.calculateErrorsForLayers(weightsW1,weightsM2, expectedValuesOutputLayer);
+            System.out.println("\n------- > error for hidden layer:");
+            NeuralNetwork.showMatrix(neuralNetwork3.getHiddenLayerError());
+            System.out.println("\n------- > error for output layer :");
+            NeuralNetwork.showMatrix(neuralNetwork3.getOutpuLayerError());
+
+            System.out.println("\n------- > new weights for hidden layer :");
+            NeuralNetwork.showMatrix(neuralNetwork3.getWeightsForHiddenLayer());
+
+            System.out.println("\n------- > new bias for hidden layer :");
+            NeuralNetwork.showMatrix(neuralNetwork3.getBiasHiddenLayer());
+
+            System.out.println("\n------- > new weights for output layer :");
+            NeuralNetwork.showMatrix(neuralNetwork3.getWeightsForOutputLayer());
+
+            System.out.println("\n------- > new bias for hidden layer :");
+            NeuralNetwork.showMatrix(neuralNetwork3.getBiasOutputLayer());
+
+
+
+         System.out.println("\n------- > error before :" +neuralNetwork3.getMeanSquaredErrorBeforeEpoch());
+         System.out.println("\n------- > error after :" +neuralNetwork3.getMeanSquaredErrorAfterEpoch());
+
+
+
+
+
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }

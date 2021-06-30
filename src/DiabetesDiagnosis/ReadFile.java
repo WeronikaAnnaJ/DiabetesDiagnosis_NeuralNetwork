@@ -48,26 +48,26 @@ public class ReadFile {
     public void segregateData(){
 
         label=allData.get(0);
-        System.out.println(" label-> " + getString(label));
+    //    System.out.println(" label-> " + getString(label));
 
         int rowsNumber= allData.size()-1;
-        System.out.println(" rows number-> " + rowsNumber);
+   //     System.out.println(" rows number-> " + rowsNumber);
 
         //75 % rows for learning, 25 % for testing
         int learningRows= ( rowsNumber /4 ) * 3  ;
-        System.out.println(" learning rows number-> " + learningRows);
+   //     System.out.println(" learning rows number-> " + learningRows);
         for( int i = 1 ; i <= learningRows ; i ++){
             learningDataSet.add(allData.get(i));
         }
-        System.out.println("size -> " + learningDataSet.size());
+   //     System.out.println("size -> " + learningDataSet.size());
 
         int testRows = rowsNumber- learningRows;
-        System.out.println(" testing rows number-> " + testRows);
+   //     System.out.println(" testing rows number-> " + testRows);
 
         for( int i = learningRows +1 ; i <= rowsNumber ; i ++){
             testingDataSet.add(allData.get(i));
         }
-        System.out.println(" size -> " + testingDataSet.size());
+   //     System.out.println(" size -> " + testingDataSet.size());
     }
 
 

@@ -11,7 +11,6 @@ public class NeuralNetwork2Layers {
 
     private List<double[]> learningDataSetFeatures;
     private List<Double> learningDataSetDecisions;
-
     private List<double[]> learningDatataSetResults = new ArrayList<>();
 
     int correctResult=0;
@@ -41,8 +40,15 @@ public class NeuralNetwork2Layers {
 
     private double[] hiddenLayerError;
     private double[] hiddenLayerError2;
-    private double[] hiddenLayerError3;
     private double[] outpuLayerError;
+
+
+    private List<double[]> testingDataSetFeatures;
+    private List<Double> testingDataSetDecisions;
+
+    private List<double[]> testingDatataSetResults = new ArrayList<>();
+    private int correctTestingResults=0;
+
 
 
     public List<double[]> meanSquaredErrorBefore = new ArrayList<>();
@@ -62,12 +68,9 @@ public class NeuralNetwork2Layers {
         net1_2 = Neuron.getOutputVector(weightsHiddenLayer2, Y1, biasHiddenLayer2);
         Y1_2 = Neuron.transformWithBipolarSigmoidFunction(net1_2, lambda);
 
-
         net2 = Neuron.getOutputVector(weightsOutputLayer, Y1_2, biasOutputLayer);
-        //change function
         Y2 = Neuron.transformWithUnipolarStepFunction(net2);
-    //    System.out.println("y2-> "+ Y2[0]);
-        //for testing
+
         learningDatataSetResults.add(Y2);
     }
 
@@ -77,15 +80,13 @@ public class NeuralNetwork2Layers {
         outpuLayerError= new double[weightsOutputLayer.length];
         for(int i =0 ; i < outpuLayerError.length; i++){
             outpuLayerError[i]=Neuron.determineErrorFor0utputNeuron(expectedValuesOutputLayer[i],Y2[i] );
-           // System.out.println(outpuLayerError[i]);
         }
-
 
         hiddenLayerError2= new double[weightsHiddenLayer2.length];
         for (int i =0 ; i < hiddenLayerError2.length ; i ++){
             double [] weightsForNextNeuron= new double[weightsOutputLayer.length];
             for(int j=0 ; j< weightsForNextNeuron.length; j++){
-                weightsForNextNeuron[j]=weightsOutputLayer[j][i]; // ?? ERROR
+                weightsForNextNeuron[j]=weightsOutputLayer[j][i];
             }
             hiddenLayerError2[i]=Neuron.determineErrorForHiddenNeuronBipolar(outpuLayerError,weightsForNextNeuron,Y1_2[i], lambda);
         }
@@ -94,11 +95,10 @@ public class NeuralNetwork2Layers {
         for (int i =0 ; i < hiddenLayerError.length ; i ++){
             double [] weightsForNextNeuron= new double[weightsHiddenLayer2.length];
             for(int j=0 ; j< weightsForNextNeuron.length; j++){
-                weightsForNextNeuron[j]= weightsHiddenLayer2[j][i]; // ?? ERROR
+                weightsForNextNeuron[j]= weightsHiddenLayer2[j][i];
             }
             hiddenLayerError[i]=Neuron.determineErrorForHiddenNeuronBipolar(hiddenLayerError2,weightsForNextNeuron,Y1[i], lambda);
         }
-
     }
 
 
@@ -108,11 +108,10 @@ public class NeuralNetwork2Layers {
         double[] newbiasHiddenLayer= new double[biasHiddenLayer.length];
         for (int i=0 ; i < newbiasHiddenLayer.length ; i ++){
             newbiasHiddenLayer[i]=Neuron.determineNewBiasForNeuron(biasHiddenLayer[i],learningRate,hiddenLayerError[i]);
-
         }
-     //   Matrix.showMatrix(newbiasHiddenLayer);
         return newbiasHiddenLayer;
     }
+
 
 
     public void calculateNewBiasForOutputLayer(){
@@ -126,8 +125,6 @@ public class NeuralNetwork2Layers {
 
 
 
-
-
     public void calculateWeightsForOutputLayer(){
         double [][] newWeightsForOutputNeurons= new double[weightsOutputLayer.length][];
         for(int i=0 ; i< newWeightsForOutputNeurons.length ; i ++){
@@ -135,18 +132,12 @@ public class NeuralNetwork2Layers {
             for(int j=0; j<weightsOutputLayer[i].length; j++){
                 oldWeightsForOutputNeuron[j]=weightsOutputLayer[i][j];
             }
-         //   System.out.println("old weights for neuron : ");
-        //    Matrix.showMatrix(oldWeightsForOutputNeuron);
-
             double[] newWeightsForOutputNeuron= Neuron.determineWeightsForNeuron(oldWeightsForOutputNeuron,learningRate,outpuLayerError[i],Y1_2);
-      //      System.out.println("new weights for neuron : ");
-      //      Matrix.showMatrix(newWeightsForOutputNeuron);
-
             newWeightsForOutputNeurons[i]=newWeightsForOutputNeuron;
         }
         this.weightsOutputLayer=newWeightsForOutputNeurons;
-     //   Matrix.showMatrix(newWeightsForOutputNeurons);
     }
+
 
 
 
@@ -155,17 +146,10 @@ public class NeuralNetwork2Layers {
 
         for(int i=0 ; i< newWeightsForHiddenNeurons.length ; i ++){
             double [] oldWeightsForHiddenNeuron= new double[weightsHiddenLayer[i].length];
-
             for(int j=0; j<weightsHiddenLayer[i].length; j++){
                 oldWeightsForHiddenNeuron[j]=weightsHiddenLayer[i][j];
             }
-         //   System.out.println("old weights for neuron : ");
-         //   Matrix.showMatrix(oldWeightsForHiddenNeuron);
-
             double[] newWeightsForHiddenNeuron= Neuron.determineWeightsForNeuron(oldWeightsForHiddenNeuron,learningRate,hiddenLayerError[i],inputVector);
-       //     System.out.println("new weights for neuron : ");
-        //    Matrix.showMatrix(newWeightsForHiddenNeuron);
-
             newWeightsForHiddenNeurons[i]=newWeightsForHiddenNeuron;
         }
         return  newWeightsForHiddenNeurons;
@@ -174,25 +158,17 @@ public class NeuralNetwork2Layers {
 
 
 
-
-
-
-
     public void carryOutEpoch( double [] input,double [] expectedValuesOutputLayer){
         calculateOutputForNetwork(input);
         calculateErrorsForLayers(expectedValuesOutputLayer);
 
-
         double [][] newWeightsForHiddenNeurons2= calculateWeightsForHiddenLayer(weightsHiddenLayer2, hiddenLayerError2, Y1);
         weightsHiddenLayer2=newWeightsForHiddenNeurons2;
-
 
         double [][] newWeightsForHiddenNeurons= calculateWeightsForHiddenLayer(weightsHiddenLayer, hiddenLayerError, input);
         weightsHiddenLayer=newWeightsForHiddenNeurons;
 
-
         calculateWeightsForOutputLayer();
-
 
         double [] newBiasHiddenLayer=calculateNewBiasForHiddenLayer(biasHiddenLayer,hiddenLayerError);
         biasHiddenLayer=newBiasHiddenLayer;
@@ -200,12 +176,8 @@ public class NeuralNetwork2Layers {
         double [] newBiasHiddenLayer2=calculateNewBiasForHiddenLayer(biasHiddenLayer2,hiddenLayerError2);
         biasHiddenLayer2=newBiasHiddenLayer2;
 
-
         calculateNewBiasForOutputLayer();
-
-
     }
-
 
 
 
@@ -214,32 +186,59 @@ public class NeuralNetwork2Layers {
     public double calculateMeanSquaredError( ){
         double error=0;
         for(int i=0;i<learningDatataSetResults.size();i++){
-         //  System.out.println(">>>>>>>>>>>>>>   expectedValues "+ learningDataSetDecisions.get(i) +"   >>>>>>>>>>  actualValue" +  learningDatataSetResults.get(i)[0]);
             error+=pow((learningDataSetDecisions.get(i)-learningDatataSetResults.get(i)[0]),2);
             if(learningDataSetDecisions.get(i)==learningDatataSetResults.get(i)[0]){
                 correctResult++;
             }
-    //       System.out.println("error " + i + " " + error );
         }
         error= error/2;
-     //   System.out.println(">>>>>>>>>>> ERROR " + error);
         return error;
-
     }
 
 
 
 
+    public double testAccurancy(List<double[]> testingDataSetFeatures, List<Double> testingDataSetDecisions) {
+        this.testingDataSetFeatures = testingDataSetFeatures;
+        this.testingDataSetDecisions = testingDataSetDecisions;
+        resetCorrectTestingResults();
+        testingDatataSetResults.removeAll(testingDatataSetResults);
+        for(int i =0 ; i < testingDataSetFeatures.size() ;i ++){
+            inputVector=testingDataSetFeatures.get(i);
+            net1 = Neuron.getOutputVector(weightsHiddenLayer, inputVector, biasHiddenLayer);
+            Y1 = Neuron.transformWithBipolarSigmoidFunction(net1, lambda);
+
+            net1_2 = Neuron.getOutputVector(weightsHiddenLayer2, Y1, biasHiddenLayer2);
+            Y1_2 = Neuron.transformWithBipolarSigmoidFunction(net1_2, lambda);
+
+            net2 = Neuron.getOutputVector(weightsOutputLayer, Y1_2, biasOutputLayer);
+            Y2 = Neuron.transformWithUnipolarStepFunction(net2);
+
+            testingDatataSetResults.add(Y2);
+        }
+        for(int i=0;i<testingDatataSetResults.size();i++){
+            if(testingDataSetDecisions.get(i)==testingDatataSetResults.get(i)[0]){
+                correctTestingResults++;
+            }
+        }
+        int allResults= testingDatataSetResults.size();
+        int correctResults= correctTestingResults;
+
+        System.out.println(correctResults + "/" + allResults);
+        double correctInPercentages= (correctResults * 100 )/allResults;
+        System.out.println(correctInPercentages + " %");
+        return  correctInPercentages;
+    }
 
 
 
 
-
-
-
-
-
-
+    public int getCorrectTestingResults() {
+        return correctTestingResults;
+    }
+    public void  resetCorrectTestingResults() {
+        correctTestingResults=0;
+    }
 
 
     public void setBiasOutputLayer(double[] biasOutputLayer) {
@@ -259,7 +258,6 @@ public class NeuralNetwork2Layers {
     public void setWeightsOutputLayer(double[][] weightsOutputLayer) {
         this.weightsOutputLayer = weightsOutputLayer;
     }
-
 
 
 
@@ -284,7 +282,6 @@ public class NeuralNetwork2Layers {
     }
 
 
-
     public double[] getBiasOutputLayer() {
         return biasOutputLayer;
     }
@@ -296,9 +293,6 @@ public class NeuralNetwork2Layers {
     public double[] getBiasHiddenLayer2() {
         return biasHiddenLayer2;
     }
-
-
-
 
 
 
@@ -332,8 +326,6 @@ public class NeuralNetwork2Layers {
 
 
 
-
-
     public double[] getHiddenLayerError() {
         return hiddenLayerError;
     }
@@ -342,15 +334,9 @@ public class NeuralNetwork2Layers {
         return hiddenLayerError2;
     }
 
-    public double[] getHiddenLayerError3() {
-        return hiddenLayerError3;
-    }
-
     public double[] getOutpuLayerError() {
         return outpuLayerError;
     }
-
-
 
 
     public List<Double> getLearningDataSetDecisions() {

@@ -2,16 +2,14 @@ package DiabetesDiagnosis;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import static java.lang.Math.pow;
-import static java.lang.Math.toRadians;
+
 
 public class Main {
 
     public static void main(String[] args) {
-        // write your code here
+
         try {
             /** Get data from file */
             ReadFile file = new ReadFile();
@@ -29,11 +27,11 @@ public class Main {
              *
              *
              * */
-            /** Neural network - one hidden layer -> 8 neurons, one output layer - 1 neuron  */
+            /** Neural network - one hidden layer -> 14 neurons, one output layer - 1 neuron  */
             data.mixAndMultiplyLearningData(data.getLearningDataSet());
             data.mixAndMultiplyLearningData(data.getLearningDataSet());
             data.mixAndMultiplyLearningData(data.getLearningDataSet());
-            System.out.println("How many rows/epoch : "   +data.getMultipliedLearningDataSetFeatures().size());
+            System.out.println("How many rows/epoch for testing learning rate : "   +data.getMultipliedLearningDataSetFeatures().size());
 
 
             NeutalNetwork1Layer neuralNetwork = new NeutalNetwork1Layer(data.getMultipliedLearningDataSetFeatures(), data.getMultipliedLearningDataSetDecisions());
@@ -55,6 +53,7 @@ public class Main {
             List<Double> errorsForLearningRate=new ArrayList<>();
 
             /** test which learning date is best* */
+            System.out.println("\nNEURAL NETWORK 1\n");
 
             /** without learning  */
             for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
@@ -80,7 +79,8 @@ public class Main {
             }
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForLearningRate.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("Neural Network wih 1 hidden layer: Neural Network 1");
+            System.out.println("learning rate 0.01");
             System.out.println("ERROR BEFORE: " + errorBefore_1);
             System.out.println("ERROR AFTER:  " + errorAfter_1);
 
@@ -102,7 +102,8 @@ public class Main {
             }
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForLearningRate.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("\nNeural Network wih 1 hidden layer: Neural Network 1");
+            System.out.println("> learning rate 0.1");
             System.out.println("ERROR BEFORE: " + errorBefore_1);
             System.out.println("ERROR AFTER:  " + errorAfter_1);
 
@@ -123,7 +124,8 @@ public class Main {
             }
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForLearningRate.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("\nNeural Network wih 1 hidden layer: Neural Network 1");
+            System.out.println("> learning rate 0.2");
             System.out.println("ERROR BEFORE: " + errorBefore_1);
             System.out.println("ERROR AFTER:  " + errorAfter_1);
 
@@ -144,7 +146,8 @@ public class Main {
             }
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForLearningRate.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("\nNeural Network wih 1 hidden layer: Neural Network 1");
+            System.out.println("> learning rate 0.3");
             System.out.println("ERROR BEFORE: " + errorBefore_1);
             System.out.println("ERROR AFTER:  " + errorAfter_1);
 
@@ -165,7 +168,8 @@ public class Main {
             }
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForLearningRate.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("\nNeural Network wih 1 hidden layer: Neural Network 1");
+            System.out.println("> learning rate 0.4");
             System.out.println("ERROR BEFORE: " + errorBefore_1);
             System.out.println("ERROR AFTER:  " + errorAfter_1);
 
@@ -186,7 +190,8 @@ public class Main {
             }
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForLearningRate.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("\nNeural Network wih 1 hidden layer: Neural Network 1");
+            System.out.println("> learning rate 0.5");
             System.out.println("ERROR BEFORE: " + errorBefore_1);
             System.out.println("ERROR AFTER:  " + errorAfter_1);
 
@@ -207,7 +212,8 @@ public class Main {
             }
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForLearningRate.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("\nNeural Network wih 1 hidden layer: Neural Network 1");
+            System.out.println("> learning rate 0.6");
             System.out.println("ERROR BEFORE: " + errorBefore_1);
             System.out.println("ERROR AFTER:  " + errorAfter_1);
 
@@ -228,7 +234,8 @@ public class Main {
             }
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForLearningRate.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("\nNeural Network wih 1 hidden layer: Neural Network 1");
+            System.out.println("> learning rate 0.7");
             System.out.println("ERROR BEFORE: " + errorBefore_1);
             System.out.println("ERROR AFTER:  " + errorAfter_1);
 
@@ -249,7 +256,8 @@ public class Main {
             }
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForLearningRate.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("\nNeural Network wih 1 hidden layer: Neural Network 1");
+            System.out.println("> learning rate 0.8");
             System.out.println("ERROR BEFORE: " + errorBefore_1);
             System.out.println("ERROR AFTER:  " + errorAfter_1);
 
@@ -270,7 +278,8 @@ public class Main {
             }
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForLearningRate.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("\nNeural Network wih 1 hidden layer: Neural Network 1");
+            System.out.println("> learning rate 0.9");
             System.out.println("ERROR BEFORE: " + errorBefore_1);
             System.out.println("ERROR AFTER:  " + errorAfter_1);
 
@@ -291,14 +300,19 @@ public class Main {
             }
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForLearningRate.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("\nNeural Network wih 1 hidden layer: Neural Network 1");
+            System.out.println("> learning rate 1");
             System.out.println("ERROR BEFORE: " + errorBefore_1);
             System.out.println("ERROR AFTER:  " + errorAfter_1);
 
 
-            System.out.println("\nErrors for learning rate { 0, 0.01, 0.1, 0.2 ,0.3 ,0.4 ,0.5, 0.6 ,0.7 ,0.8, 0.9, 1 } ");
+            Double [] learningRates= {0.0, 0.01, 0.1, 0.2 ,0.3 ,0.4 ,0.5, 0.6 ,0.7 ,0.8, 0.9, 1.0 };
+
+            System.out.println("\nErrors for learning rates");
+            int count=0;
             for (Double error:errorsForLearningRate) {
-                System.out.println(error);
+                System.out.println("> learning rate : " + learningRates[count] + "  error: " +error);
+                count++;
             }
 
 
@@ -309,6 +323,8 @@ public class Main {
             List<Double> errorsForEpochs=new ArrayList<>();
             neuralNetwork.setLearningRate(0.01);
 
+            System.out.println("\nHow many epochs is best ? (learning rate 0.01) ");
+
             /** 576 epochs */
 
             data.resetMultipliedLearningDataSet();
@@ -318,7 +334,7 @@ public class Main {
             neuralNetwork.setWeightsHiddenLayer(randomWeightsHiddenLayer);
             neuralNetwork.setWeightsOutputLayer(randomWeightsOutputLayer);
 
-            System.out.println("1. Number of Epochs : "+ neuralNetwork.getLearningDataSetFeatures().size());
+            System.out.println("\n> Number of Epochs : "+ neuralNetwork.getLearningDataSetFeatures().size());
             for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
                 double[] inputVector = neuralNetwork.getLearningDataSetFeatures().get(i);
                 double[] expectedValuesOutputLayer = new double[1];
@@ -328,7 +344,7 @@ public class Main {
             }
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForEpochs.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("Neural Network wih 1 hidden layer: Neural Network 1");
             System.out.println("ERROR AFTER:  " + errorAfter_1);
 
 
@@ -339,7 +355,7 @@ public class Main {
             neuralNetwork.setDataSets(data.getMultipliedLearningDataSetFeatures(), data.getMultipliedLearningDataSetDecisions());
             neuralNetwork.setWeightsHiddenLayer(randomWeightsHiddenLayer);
             neuralNetwork.setWeightsOutputLayer(randomWeightsOutputLayer);
-            System.out.println("2. Number of Epochs : "+ neuralNetwork.getLearningDataSetFeatures().size());
+            System.out.println("\n>  Number of Epochs : "+ neuralNetwork.getLearningDataSetFeatures().size());
             for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
                 double[] inputVector = neuralNetwork.getLearningDataSetFeatures().get(i);
                 double[] expectedValuesOutputLayer = new double[1];
@@ -348,7 +364,7 @@ public class Main {
             }
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForEpochs.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("Neural Network wih 1 hidden layer: Neural Network 1");
             System.out.println("ERROR AFTER:  " + errorAfter_1);
 
             /** 3456 epochs */
@@ -358,7 +374,7 @@ public class Main {
             neuralNetwork.setDataSets(data.getMultipliedLearningDataSetFeatures(), data.getMultipliedLearningDataSetDecisions());
             neuralNetwork.setWeightsHiddenLayer(randomWeightsHiddenLayer);
             neuralNetwork.setWeightsOutputLayer(randomWeightsOutputLayer);
-            System.out.println("3. Number of Epochs : "+ neuralNetwork.getLearningDataSetFeatures().size());
+            System.out.println("\n> Number of Epochs : "+ neuralNetwork.getLearningDataSetFeatures().size());
             for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
                 double[] inputVector = neuralNetwork.getLearningDataSetFeatures().get(i);
                 double[] expectedValuesOutputLayer = new double[1];
@@ -367,7 +383,7 @@ public class Main {
             }
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForEpochs.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("Neural Network wih 1 hidden layer: Neural Network 1");
             System.out.println("ERROR AFTER:  " + errorAfter_1);
 
 
@@ -378,7 +394,7 @@ public class Main {
             neuralNetwork.setDataSets(data.getMultipliedLearningDataSetFeatures(), data.getMultipliedLearningDataSetDecisions());
             neuralNetwork.setWeightsHiddenLayer(randomWeightsHiddenLayer);
             neuralNetwork.setWeightsOutputLayer(randomWeightsOutputLayer);
-            System.out.println("4. Number of Epochs : "+ neuralNetwork.getLearningDataSetFeatures().size());
+            System.out.println("\n> Number of Epochs : "+ neuralNetwork.getLearningDataSetFeatures().size());
 
             for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
                 double[] inputVector = neuralNetwork.getLearningDataSetFeatures().get(i);
@@ -388,7 +404,7 @@ public class Main {
             }
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForEpochs.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("Neural Network wih 1 hidden layer: Neural Network 1");
             System.out.println("ERROR AFTER:  " + errorAfter_1);
 
 
@@ -400,7 +416,7 @@ public class Main {
             neuralNetwork.setDataSets(data.getMultipliedLearningDataSetFeatures(), data.getMultipliedLearningDataSetDecisions());
             neuralNetwork.setWeightsHiddenLayer(randomWeightsHiddenLayer);
             neuralNetwork.setWeightsOutputLayer(randomWeightsOutputLayer);
-            System.out.println("5. Number of Epochs : "+ neuralNetwork.getLearningDataSetFeatures().size());
+            System.out.println("\n> Number of Epochs : "+ neuralNetwork.getLearningDataSetFeatures().size());
 
             for (int i = 0; i < neuralNetwork.getLearningDataSetFeatures().size(); i++) {
                 double[] inputVector = neuralNetwork.getLearningDataSetFeatures().get(i);
@@ -411,23 +427,22 @@ public class Main {
             neuralNetwork.resetCorrectResults();
             errorAfter_1=neuralNetwork.calculateMeanSquaredError();
             errorsForEpochs.add(errorAfter_1);
-            System.out.println("Neural Network wih 1 hidden layer:");
+            System.out.println("Neural Network wih 1 hidden layer: Neural Network 1");
             System.out.println("ERROR AFTER:  " + errorAfter_1);
             System.out.println("Correct results : "+ neuralNetwork.getCorrectResult()+ " everything : " + neuralNetwork.getLearningDataSetDecisions().size());
 
 
-            System.out.println("\nErrors for epochs { 576, 1728, 3456, 5760, 8640 } ");
+            Integer [] numberOfEpochs ={ 576, 1728, 3456, 5760, 8640 };
+            System.out.println("\nErrors for epochs : ");
+            int countNumberOfEpochs=0;
             for (Double error:errorsForEpochs) {
-                System.out.println(error);
+                System.out.println("> for " + numberOfEpochs[countNumberOfEpochs] + "   error: "+ error);
+                countNumberOfEpochs++;
             }
 
 
 
 
-
-
-//zastanowić się nad funkcją jaka na koniec żeby można było przypisać jako 0 lub 1
-            //moze liniowa?
 
 
             /**
@@ -439,6 +454,7 @@ public class Main {
              * */
 
 
+            System.out.println("\n\nNEURAL NETWORK 2_A\n");
             /** Neural network - 2 hidden layer -> 8 neurons, 4 neurons, one output layer - 1 neuron  */
             NeuralNetwork neuralNetwork2_A = new NeuralNetwork(data.getMultipliedLearningDataSetFeatures(), data.getMultipliedLearningDataSetDecisions());
             double[] biasHiddenLayer2_A = {0, 0, 0, 0, 0, 0, 0, 0,0,0}; //whitch matrix
@@ -447,7 +463,7 @@ public class Main {
             neuralNetwork2_A.setBiasHiddenLayer(biasHiddenLayer2_A);
             neuralNetwork2_A.setBiasHiddenLayer2(biasHiddenLayer2_A_2);
             neuralNetwork2_A.setBiasOutputLayer(biasOutputLayer2_A);
-            neuralNetwork2_A.setLearningRate(0.1);
+            neuralNetwork2_A.setLearningRate(0.01);
             neuralNetwork2_A.setWeightsHiddenLayer(Matrix.getRandomWeightsMatrix(8, 10));
             neuralNetwork2_A.setWeightsHiddenLayer2(Matrix.getRandomWeightsMatrix(10, 4));
             neuralNetwork2_A.setWeightsOutputLayer(Matrix.getRandomWeightsMatrix(4, 1));
@@ -475,13 +491,15 @@ public class Main {
             neuralNetwork2_A.resetCorrectResults();
             errorAfter2_A=neuralNetwork2_A.calculateMeanSquaredError();
             neuralNetwork2_A.resetLearningDataSetResults();
-            System.out.println();
-            System.out.println();
-            System.out.println("Neural network - 2 hidden layer -> 8 neurons, 4 neurons, one output layer - 1 neuron ");
-            System.out.println();
+            System.out.println("Hidden layers: 2");
+            System.out.println("Neurons hidden layer 1: 10");
+            System.out.println("Neurons hidden layer 2: 4");
+            System.out.println("Neurons output layer: 1");
+            System.out.println("Funcjon for hidden layers: sigmoid unipolar");
+            System.out.println("Funcjon for output layer: step unipolar");
             System.out.println("ERROR BEFORE: " + errorBefore2_A);
             System.out.println("ERROR AFTER:  " + errorAfter2_A);
-            System.out.println("Correct results : "+ neuralNetwork2_A.getCorrectResult()+ " everything : " + neuralNetwork2_A.getLearningDataSetDecisions().size());
+            System.out.println("Correct decisisions: "+ neuralNetwork2_A.getCorrectResult()+ "   all decisions: " + neuralNetwork2_A.getLearningDataSetDecisions().size());
 
 
 
@@ -497,7 +515,7 @@ public class Main {
              *
              * */
 
-
+            System.out.println("\n\nNEURAL NETWORK 2_B\n");
             /** Neural network - 2 hidden layer -> 24 neurons, 14 neurons, one output layer - 1 neuron  */
             NeuralNetwork neuralNetwork2_B = new NeuralNetwork(data.getMultipliedLearningDataSetFeatures(), data.getMultipliedLearningDataSetDecisions());
             double[] biasHiddenLayer2_B = {0, 0, 0, 0, 0, 0, 0, 0,0,0,0, 0, 0, 0,0,0,0, 0, 0, 0, 0,0,0, 0 }; //whitch matrix
@@ -507,7 +525,7 @@ public class Main {
             neuralNetwork2_B.setBiasHiddenLayer2(biasHiddenLayer2_B_2);
             neuralNetwork2_B.setBiasOutputLayer(biasOutputLayer2_B);
             neuralNetwork2_B.setLambda(1);
-            neuralNetwork2_B.setLearningRate(0.1);
+            neuralNetwork2_B.setLearningRate(0.01);
             neuralNetwork2_B.setWeightsHiddenLayer(Matrix.getRandomWeightsMatrix(8, 24));
             neuralNetwork2_B.setWeightsHiddenLayer2(Matrix.getRandomWeightsMatrix(24, 14));
             neuralNetwork2_B.setWeightsOutputLayer(Matrix.getRandomWeightsMatrix(14, 1));
@@ -535,13 +553,74 @@ public class Main {
             neuralNetwork2_B.resetCorrectResults();
             errorAfter2_B=neuralNetwork2_B.calculateMeanSquaredError();
             neuralNetwork2_B.resetLearningDataSetResults();
-            System.out.println();
-            System.out.println();
-            System.out.println("Neural network - 2 hidden layer -> 24 neurons, 14 neurons, one output layer - 1 neuron ");
-            System.out.println();
+            System.out.println("Hidden layers: 2");
+            System.out.println("Neurons hidden layer 1: 24");
+            System.out.println("Neurons hidden layer 2: 14");
+            System.out.println("Neurons output layer:  1");
+            System.out.println("Funcjon for hidden layers: sigmoid unipolar");
+            System.out.println("Funcjon for output layer: step unipolar");
             System.out.println("ERROR BEFORE: " + errorBefore2_B);
-            System.out.println("ERROR AFTER:  " + errorAfter2_B);
-            System.out.println("Correct results : "+ neuralNetwork2_B.getCorrectResult()+ " everything : " + neuralNetwork2_B.getLearningDataSetDecisions().size());
+            System.out.println("ERROR AFTER: " + errorAfter2_B);
+            System.out.println("Correct decisisions: "+ neuralNetwork2_B.getCorrectResult()+ "  all decisions: " + neuralNetwork2_B.getLearningDataSetDecisions().size());
+
+
+
+
+            /**
+             *
+             *
+             * Sieć neuronowa 2_C
+             *
+             *
+             * */
+            System.out.println("\n\nNEURAL NETWORK 2_C\n");
+            /** Neural network - 2 hidden layer -> 8 neurons, 4 neurons one output layer - 1 neuron  */
+            NeuralNetwork2Layers neuralNetwork2Layers= new NeuralNetwork2Layers(data.getMultipliedLearningDataSetFeatures(),data.getMultipliedLearningDataSetDecisions());
+            double[] biasHiddenLayer2 = {0, 0, 0, 0, 0, 0,0,0};
+            double[] biasHiddenLayer2_1 = {0, 0, 0, 0};
+            double[] biasOutputLayer2 = {0};
+            neuralNetwork2Layers.setBiasHiddenLayer(biasHiddenLayer2);
+            neuralNetwork2Layers.setBiasHiddenLayer2(biasHiddenLayer2_1);
+            neuralNetwork2Layers.setBiasOutputLayer(biasOutputLayer2);
+            neuralNetwork2Layers.setLambda(1);
+            neuralNetwork2Layers.setLearningRate(0.1);
+            neuralNetwork2Layers.setWeightsHiddenLayer(Matrix.getRandomWeightsMatrix(8, 8));
+            neuralNetwork2Layers.setWeightsHiddenLayer2(Matrix.getRandomWeightsMatrix(8, 4));
+            neuralNetwork2Layers.setWeightsOutputLayer(Matrix.getRandomWeightsMatrix(4, 1));
+
+            double errorBefore_2=0;
+            double errorAfter_2=0;
+            for (int i = 0; i < neuralNetwork2Layers.getLearningDataSetFeatures().size(); i++) {
+
+                double[] inputVector = neuralNetwork2Layers.getLearningDataSetFeatures().get(i);
+                double[] expectedValuesOutputLayer = new double[1];
+                expectedValuesOutputLayer[0] = neuralNetwork2Layers.getLearningDataSetDecisions().get(i);// what if is onlu one neuron in output vector ? make methods for double instead double []?
+                neuralNetwork2Layers.calculateOutputForNetwork(inputVector);
+            }
+
+            errorBefore_2=neuralNetwork2Layers.calculateMeanSquaredError();
+            neuralNetwork2Layers.resetLearningDataSetResults();
+
+            for (int i = 0; i < neuralNetwork2Layers.getLearningDataSetFeatures().size(); i++) {
+
+                double[] inputVector = neuralNetwork2Layers.getLearningDataSetFeatures().get(i);
+                double[] expectedValuesOutputLayer = new double[1];
+                expectedValuesOutputLayer[0] = neuralNetwork2Layers.getLearningDataSetDecisions().get(i);// what if is onlu one neuron in output vector ? make methods for double instead double []?
+                neuralNetwork2Layers.carryOutEpoch(inputVector, expectedValuesOutputLayer);
+            }
+            neuralNetwork2Layers.resetCorrectResults();
+            errorAfter_2=neuralNetwork2Layers.calculateMeanSquaredError();
+            System.out.println("Hidden layers: 2");
+            System.out.println("Neurons hidden layer 1: 8");
+            System.out.println("Neurons hidden layer 2: 4");
+            System.out.println("Neurons output layer:  1");
+            System.out.println("Funcjon for hidden layers: sigmoid bipolar");
+            System.out.println("Funcjon for output layer: step unipolar");
+            System.out.println("ERROR BEFORE: " + errorBefore_2);
+            System.out.println("ERROR AFTER: " + errorAfter_2);
+            System.out.println("Correct decisisions: "+ neuralNetwork2Layers.getCorrectResult()+ "  all decisions: " + neuralNetwork2Layers.getLearningDataSetDecisions().size());
+
+
 
 
             /**
@@ -552,7 +631,7 @@ public class Main {
              *
              * */
 
-
+            System.out.println("\n\nNEURAL NETWORK 3_A\n");
             /** Neural network - 3 hidden layer -> 10 neurons, 4 neurons, 2 neurons one output layer - 1 neuron  */
             NeuralNetwork3Layers neuralNetwork3_A = new NeuralNetwork3Layers(data.getMultipliedLearningDataSetFeatures(), data.getMultipliedLearningDataSetDecisions());
             double[] biasHiddenLayer3_A = {1, 1, 1, 1, 1, 1, 1, 1,1,1};
@@ -564,7 +643,7 @@ public class Main {
             neuralNetwork3_A.setBiasHiddenLayer3(biasHiddenLayer3_A_2);
             neuralNetwork3_A.setBiasOutputLayer(biasOutputLayer3_A);
             neuralNetwork3_A.setLambda(1);
-            neuralNetwork3_A.setLearningRate(0.1);
+            neuralNetwork3_A.setLearningRate(0.01);
             neuralNetwork3_A.setWeightsHiddenLayer(Matrix.getRandomWeightsMatrix(8, 10));
             neuralNetwork3_A.setWeightsHiddenLayer2(Matrix.getRandomWeightsMatrix(10, 4));
             neuralNetwork3_A.setWeightsHiddenLayer3(Matrix.getRandomWeightsMatrix(4, 2));
@@ -594,14 +673,16 @@ public class Main {
             neuralNetwork3_A.resetCorrectResults();
             errorAfter3_A=neuralNetwork3_A.calculateMeanSquaredError();
             neuralNetwork3_A.resetLearningDataSetResults();
-            System.out.println();
-            System.out.println();
-            System.out.println();
-            System.out.println("Neural network - 3 hidden layer -> 8 neurons, 4 neurons,2 neurons one output layer - 1 neuron");
-            System.out.println();
+            System.out.println("Hidden layers: 3");
+            System.out.println("Neurons hidden layer 1: 10");
+            System.out.println("Neurons hidden layer 2: 4");
+            System.out.println("Neurons hidden layer 3: 2");
+            System.out.println("Neurons output layer: 1");
+            System.out.println("Funcjon for hidden layers: sigmoid unipolar");
+            System.out.println("Funcjon for output layer: step unipolar");
             System.out.println("ERROR BEFORE: " + errorBefore3_A);
             System.out.println("ERROR AFTER:  " + errorAfter3_A);
-            System.out.println("Correct results : "+ neuralNetwork3_A.getCorrectResult()+ " everything : " + neuralNetwork3_A.getLearningDataSetDecisions().size());
+            System.out.println("Correct decisisions: "+ neuralNetwork3_A.getCorrectResult()+ "   all decisions: " + neuralNetwork3_A.getLearningDataSetDecisions().size());
 
 
 
@@ -617,8 +698,8 @@ public class Main {
              *
              * */
 
-
-            /** Neural network - 3 hidden layer -> 8 neurons, 4 neurons,2 neurons one output layer - 1 neuron  */
+            System.out.println("\n\nNEURAL NETWORK 3_B\n");
+            /** Neural network - 3 hidden layer -> 20 neurons, 5 neurons,3 neurons one output layer - 1 neuron  */
             NeuralNetwork3Layers neuralNetwork3_B = new NeuralNetwork3Layers(data.getMultipliedLearningDataSetFeatures(), data.getMultipliedLearningDataSetDecisions());
             double[] biasHiddenLayer3_B = {1, 1, 1, 1, 1, 1, 1, 1,1,1,1, 1, 1, 1, 1, 1, 1, 1,1,1,};
             double[] biasHiddenLayer3_B_1 = {1, 1, 1, 1, 1};
@@ -659,15 +740,16 @@ public class Main {
             neuralNetwork3_B.resetCorrectResults();
             errorAfter3_B=neuralNetwork3_B.calculateMeanSquaredError();
             neuralNetwork3_B.resetLearningDataSetResults();
-            System.out.println();
-            System.out.println();
-            System.out.println();
-            System.out.println("Neural network - 3 hidden layer -> 20 neurons, 5 neurons,3 neurons one output layer - 1 neuron");
-            System.out.println();
+            System.out.println("Hidden layers: 3");
+            System.out.println("Neurons hidden layer 1: 20");
+            System.out.println("Neurons hidden layer 2: 5");
+            System.out.println("Neurons hidden layer 3: 3");
+            System.out.println("Neurons output layer: 1");
+            System.out.println("Funcjon for hidden layers: sigmoid unipolar");
+            System.out.println("Funcjon for output layer: step unipolar");
             System.out.println("ERROR BEFORE: " + errorBefore3_B);
             System.out.println("ERROR AFTER:  " + errorAfter3_B);
-            System.out.println("Correct results : "+ neuralNetwork3_B.getCorrectResult()+ " everything : " + neuralNetwork3_B.getLearningDataSetDecisions().size());
-
+            System.out.println("Correct decisisions: "+ neuralNetwork3_B.getCorrectResult()+ "   all decisions: " + neuralNetwork3_B.getLearningDataSetDecisions().size());
 
 
 
@@ -675,58 +757,27 @@ public class Main {
             /**
              *
              *
-             * Sieć neuronowa 2_C
+             * TESTING
              *
              *
              * */
 
-            /** Neural network - 2 hidden layer -> 8 neurons, 4 neurons one output layer - 1 neuron  */
-            NeuralNetwork2Layers neuralNetwork2Layers= new NeuralNetwork2Layers(data.getMultipliedLearningDataSetFeatures(),data.getMultipliedLearningDataSetDecisions());
-            double[] biasHiddenLayer2 = {0, 0, 0, 0, 0, 0,0,0};
-            double[] biasHiddenLayer2_1 = {0, 0, 0, 0};
-            double[] biasOutputLayer2 = {0};
-            neuralNetwork2Layers.setBiasHiddenLayer(biasHiddenLayer2);
-            neuralNetwork2Layers.setBiasHiddenLayer2(biasHiddenLayer2_1);
-            neuralNetwork2Layers.setBiasOutputLayer(biasOutputLayer2);
-            neuralNetwork2Layers.setLambda(1);
-            neuralNetwork2Layers.setLearningRate(0.1);
-            neuralNetwork2Layers.setWeightsHiddenLayer(Matrix.getRandomWeightsMatrix(8, 8));
-            neuralNetwork2Layers.setWeightsHiddenLayer2(Matrix.getRandomWeightsMatrix(8, 4));
-            neuralNetwork2Layers.setWeightsOutputLayer(Matrix.getRandomWeightsMatrix(4, 1));
 
-            double errorBefore_2=0;
-            double errorAfter_2=0;
-            for (int i = 0; i < neuralNetwork2Layers.getLearningDataSetFeatures().size(); i++) {
+            /** Neuron Network 1 */
 
-                double[] inputVector = neuralNetwork2Layers.getLearningDataSetFeatures().get(i);
-                double[] expectedValuesOutputLayer = new double[1];
-                expectedValuesOutputLayer[0] = neuralNetwork2Layers.getLearningDataSetDecisions().get(i);// what if is onlu one neuron in output vector ? make methods for double instead double []?
-                neuralNetwork2Layers.calculateOutputForNetwork(inputVector);
-            }
-
-            errorBefore_2=neuralNetwork2Layers.calculateMeanSquaredError();
-            neuralNetwork2Layers.resetLearningDataSetResults();
-
-            for (int i = 0; i < neuralNetwork2Layers.getLearningDataSetFeatures().size(); i++) {
-
-                double[] inputVector = neuralNetwork2Layers.getLearningDataSetFeatures().get(i);
-                double[] expectedValuesOutputLayer = new double[1];
-                expectedValuesOutputLayer[0] = neuralNetwork2Layers.getLearningDataSetDecisions().get(i);// what if is onlu one neuron in output vector ? make methods for double instead double []?
-                neuralNetwork2Layers.carryOutEpoch(inputVector, expectedValuesOutputLayer);
-            }
-            neuralNetwork2Layers.resetCorrectResults();
-            errorAfter_2=neuralNetwork2Layers.calculateMeanSquaredError();
-            System.out.println();
-            System.out.println();
-            System.out.println();
-            System.out.println("Neural network - 2 hidden layer -> 8 neurons, 4 neurons one output layer - 1 neuron- step unipolar function");
-            System.out.println();
-            System.out.println("ERROR BEFORE " + errorBefore_2);
-            System.out.println("ERROR AFTER  " + errorAfter_2);
-            System.out.println("Correct results : "+ neuralNetwork2Layers.getCorrectResult()+ " everything : " + neuralNetwork2Layers.getLearningDataSetDecisions().size());
-
-
-
+            System.out.println("\n\nTEST");
+            System.out.println("\nneuralNetwork1\ncorrect decisions ");
+            double neuralNetwork1_correction= neuralNetwork.testAccurancy(data.getTestingDataSetFeatures(), data.getTestingDataSetDecisions());
+            System.out.println("\nneuralNetwork2_A\ncorrect decision ");
+            double neuralNetwork2_A_correction= neuralNetwork2_A.testAccurancy(data.getTestingDataSetFeatures(), data.getTestingDataSetDecisions());
+            System.out.println("\nneuralNetwork2_B\ncorrect decisions ");
+            double neuralNetwork2_B_correction= neuralNetwork2_B.testAccurancy(data.getTestingDataSetFeatures(), data.getTestingDataSetDecisions());
+            System.out.println("\nneuralNetwork2_C\ncorrect decisions ");
+            double neuralNetwork2_C_correction= neuralNetwork2Layers.testAccurancy(data.getTestingDataSetFeatures(), data.getTestingDataSetDecisions());
+            System.out.println("\nneuralNetwork3_A\ncorrect decisions ");
+            double neuralNetwork3_A_correction= neuralNetwork3_A.testAccurancy(data.getTestingDataSetFeatures(), data.getTestingDataSetDecisions());
+            System.out.println("\nneuralNetwork3_B\ncorrect decisions ");
+            double neuralNetwork3_B_correction= neuralNetwork3_B.testAccurancy(data.getTestingDataSetFeatures(), data.getTestingDataSetDecisions());
 
         } catch (IOException e) {
             e.printStackTrace();

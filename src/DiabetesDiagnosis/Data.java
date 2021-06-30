@@ -48,6 +48,8 @@ public class Data {
     }
 
 
+
+
     public void mixAndMultiplyLearningData(List<String[]> learningDataSet){
         Collections.shuffle(learningDataSet);
         multipliedLearningDataSet.addAll(learningDataSet);
@@ -65,8 +67,9 @@ public class Data {
             double decision = Double.parseDouble(set[columnNumber - 1]);
             multipliedLearningDataSetDecisions.add(decision);
         }
-
     }
+
+
 
 
     public void mixAndMultiplyLearningData(){
@@ -88,8 +91,6 @@ public class Data {
     }
 
 
-
-
     private void segregateLearningDataSet(){
         for (String [] set : learningDataSet) {
             int columnNumber= set.length;
@@ -105,6 +106,7 @@ public class Data {
             learningDataSetDecisions.add(decision);
         }
     }
+
 
 
 
@@ -126,9 +128,9 @@ public class Data {
 
 
 
+
     public void showLearningSets(){
         int count=1;
-
         for (int i =0 ; i <learningDataSetFeatures.size() ; i ++ ) {
             System.out.print(count + ".  " );
             count++;
@@ -142,9 +144,12 @@ public class Data {
         }
     }
 
+
+
+
+
     public void showExtendedLearningSets(){
         int count=1;
-
         for (int i =0 ; i <multipliedLearningDataSetFeatures.size() ; i ++ ) {
             System.out.print(count + ".  " );
             count++;
@@ -159,50 +164,10 @@ public class Data {
     }
 
 
-
-
-    public List<double[]> getLearningDataSetFeatures() {
-        return learningDataSetFeatures;
-    }
-
-    public List<Double> getLearningDataSetDecisions() {
-        return learningDataSetDecisions;}
-
-    public List<Double> getMultipliedLearningDataSetDecisions() {
-        return multipliedLearningDataSetDecisions;
-    }
-
-    public List<double[]> getMultipliedLearningDataSetFeatures() {
-        return multipliedLearningDataSetFeatures;
-    }
-
-    public List<double[]> getTestingDataSetFeatures() {
-        return testingDataSetFeatures;
-    }
-
-    public void setTestingDataSetDecisions(List<Double> testDataSetDecisions) {
-        this.testingDataSetDecisions = testDataSetDecisions;
-    }
-
-    public List<String[]> getLearningDataSet() {
-        return learningDataSet;
-    }
-
-    public List<String[]> getTestingDataSet() {
-        return testingDataSet;
-    }
-
-    public void resetMultipliedLearningDataSet(){
-        multipliedLearningDataSetDecisions.removeAll(multipliedLearningDataSetDecisions);
-        multipliedLearningDataSetFeatures.removeAll(multipliedLearningDataSetFeatures);
-        multipliedLearningDataSet.removeAll(multipliedLearningDataSet);
-    }
-
     public void mixDataSets(List<String []> dataSet){
         mixedDataSet.removeAll(mixedDataSet);
         mixedLearningDataSetDecisions.removeAll(mixedLearningDataSetDecisions);
         mixedLearningDataSetFeatures.removeAll(mixedLearningDataSetFeatures);
-
         Collections.shuffle(dataSet);
         mixedDataSet.addAll(dataSet);
         for (String[] set : mixedDataSet) {
@@ -212,7 +177,6 @@ public class Data {
                 features[i] = Double.parseDouble(set[i]);
             }
             mixedLearningDataSetFeatures.add(features);
-            System.out.println("deatues >>>>>>>>>>>>>>>>>>>>>>>>>>"+ mixedLearningDataSetFeatures.size());
         }
         for (String[] set : mixedDataSet) {
             int columnNumber = set.length;
@@ -221,11 +185,64 @@ public class Data {
         }
     }
 
+
+
+    public void resetMultipliedLearningDataSet(){
+        multipliedLearningDataSetDecisions.removeAll(multipliedLearningDataSetDecisions);
+        multipliedLearningDataSetFeatures.removeAll(multipliedLearningDataSetFeatures);
+        multipliedLearningDataSet.removeAll(multipliedLearningDataSet);
+    }
+
+
+
+    public List<double[]> getLearningDataSetFeatures() {
+
+        return learningDataSetFeatures;
+    }
+
+    public List<Double> getLearningDataSetDecisions() {
+        return learningDataSetDecisions;
+    }
+
+    public List<Double> getMultipliedLearningDataSetDecisions() {
+
+        return multipliedLearningDataSetDecisions;
+    }
+
+    public List<double[]> getMultipliedLearningDataSetFeatures() {
+
+        return multipliedLearningDataSetFeatures;
+    }
+
+    public List<double[]> getTestingDataSetFeatures() {
+
+        return testingDataSetFeatures;
+    }
+
+    public void setTestingDataSetDecisions(List<Double> testDataSetDecisions) {
+        this.testingDataSetDecisions = testDataSetDecisions;
+    }
+
+    public List<String[]> getLearningDataSet() {
+
+        return learningDataSet;
+    }
+
+    public List<String[]> getTestingDataSet() {
+
+        return testingDataSet;
+    }
+
+
     public List<Double> getMixedLearningDataSetDecisions() {
         return mixedLearningDataSetDecisions;
     }
 
     public List<double[]> getMixedLearningDataSetFeatures(){
         return  mixedLearningDataSetFeatures;
+    }
+
+    public List<Double> getTestingDataSetDecisions() {
+        return testingDataSetDecisions;
     }
 }

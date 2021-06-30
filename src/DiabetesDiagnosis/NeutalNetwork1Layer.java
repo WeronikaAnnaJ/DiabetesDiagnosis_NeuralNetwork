@@ -11,21 +11,24 @@ public class NeutalNetwork1Layer {
 
     private List<double[]> learningDataSetFeatures;
     private List<Double> learningDataSetDecisions;
-
     private List<double[]> learningDatataSetResults = new ArrayList<>();
+
+
+    private List<double[]> testingDataSetFeatures;
+    private List<Double> testingDataSetDecisions;
+    private List<double[]> testingDatataSetResults = new ArrayList<>();
+
 
     private double[] inputVector;
     private double lambda;
     private double learningRate;
-    int correctResult=0;
+    private int correctResult=0;
 
     private double[][] weightsHiddenLayer;
-
     private double[][] weightsOutputLayer;
 
 
     private double[] biasHiddenLayer;
-
     private double[] biasOutputLayer;
 
     private double[] net1;
@@ -34,9 +37,13 @@ public class NeutalNetwork1Layer {
     private double[] Y2;
 
     private double[] hiddenLayerError;
-
     private double[] outpuLayerError;
+
     private List<Double> meanSquaredErrors= new ArrayList<>();
+
+    private int correctTestingResults=0;
+
+
 
 
     NeutalNetwork1Layer(List<double[]> learningDataSetFeatures, List<Double> learningDataSetDecisions) {
@@ -52,7 +59,6 @@ public class NeutalNetwork1Layer {
         net2 = Neuron.getOutputVector(weightsOutputLayer, Y1, biasOutputLayer);
         Y2 = Neuron.transformWithUnipolarStepFunction(net2);
 
-        //for testing
         learningDatataSetResults.add(Y2);
 
     }
@@ -64,7 +70,6 @@ public class NeutalNetwork1Layer {
         for(int i =0 ; i < outpuLayerError.length; i++){
             outpuLayerError[i]=Neuron.determineErrorFor0utputNeuron(expectedValuesOutputLayer[i],Y2[i] );
         }
-
         hiddenLayerError= new double[weightsHiddenLayer.length];
         for (int i =0 ; i < hiddenLayerError.length ; i ++){
             double [] weightsForNextNeuron= new double[weightsOutputLayer.length];
@@ -146,7 +151,6 @@ public class NeutalNetwork1Layer {
         double error=0;
         for(int i=0;i<learningDatataSetResults.size();i++){
             error+=pow((learningDataSetDecisions.get(i)-learningDatataSetResults.get(i)[0]),2);
-        //    System.out.println(">>>>>>>>>>>>>>   expectedValues "+learningDataSetDecisions.get(i) +"   >>>>>>>>>>  actualValue" +learningDatataSetResults.get(i)[0] );
             if(learningDataSetDecisions.get(i)==learningDatataSetResults.get(i)[0]){
                 correctResult++;
             }
@@ -160,17 +164,40 @@ public class NeutalNetwork1Layer {
     public double calculateMeanSquaredError(double [] expectedValues,  double [] actualValues ){
         double error=0.0;
         for(int i=0;i<expectedValues.length;i++){
-            //       System.out.println(">>>>>>>>>>>>>>   expectedValues "+expectedValues[i] +"   >>>>>>>>>>  actualValue" + actualValues[i] );
             error+=pow((expectedValues[i]-actualValues[i]),2);
-            //      System.out.println("error " + i + " " + error );
         }
         error= error/2;
         meanSquaredErrors.add(error);
-        // System.out.println(">>>>>>>>>>> ERROR " + error);
         return error;
 
     }
 
+
+
+    public double testAccurancy(List<double[]> testingDataSetFeatures, List<Double> testingDataSetDecisions) {
+        this.testingDataSetFeatures = testingDataSetFeatures;
+        this.testingDataSetDecisions = testingDataSetDecisions;
+        resetCorrectTestingResults();
+        testingDatataSetResults.removeAll(testingDatataSetResults);
+        for(int i =0 ; i < testingDataSetFeatures.size() ;i ++){
+            inputVector=testingDataSetFeatures.get(i);
+            net1 = Neuron.getOutputVector(weightsHiddenLayer, inputVector, biasHiddenLayer);
+            Y1 = Neuron.transformWithUnipolarSigmoidFunction(net1, lambda);
+            net2 = Neuron.getOutputVector(weightsOutputLayer, Y1, biasOutputLayer);
+            Y2 = Neuron.transformWithUnipolarStepFunction(net2);
+            testingDatataSetResults.add(Y2);
+        }
+
+        for(int i=0;i<testingDatataSetResults.size();i++){
+            if(testingDataSetDecisions.get(i)==testingDatataSetResults.get(i)[0]) correctTestingResults++;
+        }
+        int allResults= testingDatataSetResults.size();
+        int correctResults= correctTestingResults;
+        System.out.println(correctResults + "/" + allResults);
+        double correctInPercentages= (correctResults * 100 )/allResults;
+        System.out.println(correctInPercentages + " %");
+        return  correctInPercentages;
+    }
 
 
     public void setBiasOutputLayer(double[] biasOutputLayer) {
@@ -202,8 +229,6 @@ public class NeutalNetwork1Layer {
         return weightsHiddenLayer;
     }
 
-
-
     public double[] getBiasOutputLayer() {
         return biasOutputLayer;
     }
@@ -211,9 +236,6 @@ public class NeutalNetwork1Layer {
     public double[] getBiasHiddenLayer() {
         return biasHiddenLayer;
     }
-
-
-
 
 
     public double[] getNet1() {
@@ -224,8 +246,6 @@ public class NeutalNetwork1Layer {
         return net2;
     }
 
-
-
     public double[] getY1() {
         return Y1;
     }
@@ -235,7 +255,6 @@ public class NeutalNetwork1Layer {
     }
 
 
-
     public double[] getHiddenLayerError() {
         return hiddenLayerError;
     }
@@ -243,8 +262,6 @@ public class NeutalNetwork1Layer {
     public double[] getOutpuLayerError() {
         return outpuLayerError;
     }
-
-
 
 
     public List<Double> getLearningDataSetDecisions() {
@@ -271,12 +288,11 @@ public class NeutalNetwork1Layer {
         meanSquaredErrors.removeAll(meanSquaredErrors);
     }
 
-
-    public void setDataSets(List<double[]> multipliedLearningDataSetFeatures, List<Double> multipliedLearningDataSetDecisions) {
-
-        this.learningDataSetDecisions=multipliedLearningDataSetDecisions;
-        this.learningDataSetFeatures =multipliedLearningDataSetFeatures;
+    public void  setDataSets(List<double []> multipliedLearningDataSetFeatures, List<Double> multipliedLearningDataSetDecisions){
+        this.learningDataSetDecisions= multipliedLearningDataSetDecisions;
+        this.learningDataSetFeatures= multipliedLearningDataSetFeatures;
     }
+
 
     public void resetCorrectResults(){
         correctResult=0;
@@ -286,7 +302,16 @@ public class NeutalNetwork1Layer {
         return correctResult;
     }
 
+    public int getCorrectTestingResults() {
+        return correctTestingResults;
+    }
+    public void  resetCorrectTestingResults() {
+        correctTestingResults=0;
+    }
 
-
+    public void resetlearningDataSets(){
+        this.learningDataSetFeatures.removeAll(learningDataSetFeatures);
+        this.learningDataSetDecisions.removeAll(learningDataSetDecisions);
+    }
 
 }
